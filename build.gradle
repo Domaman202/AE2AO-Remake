@@ -22,7 +22,6 @@ repositories {
 		}
 	}
 
-	// Required for libblockattributes
 	maven {
 		name = "BuildCraft"
 		url = "https://mod-buildcraft.com/maven"
@@ -30,6 +29,8 @@ repositories {
 			includeGroup "alexiil.mc.lib"
 		}
 	}
+
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -51,6 +52,9 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	include "me.sargunvohra.mcmods:autoconfig1u:3.2.2"
+
+	compile 'com.github.Mouse0w0:FastReflection:1.0.1'
+	include 'com.github.Mouse0w0:FastReflection:1.0.1'
 }
 
 processResources {

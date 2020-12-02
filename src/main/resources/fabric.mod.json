@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "ae2ao",
   "version": "${version}",
 
   "name": "Example Mod",
@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "ru.DmN.AE2AO.Main"
     ]
   },
   "mixins": [
