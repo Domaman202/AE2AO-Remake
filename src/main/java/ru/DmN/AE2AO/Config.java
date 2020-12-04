@@ -6,4 +6,8 @@ import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 public class Config implements ConfigData {
     public boolean DisableChannels = true;
     public boolean ControllerLimits = false;
+    //
+    public int Max_X = 7;
+    public int Max_Y = 7;
+    public int Max_Z = 7;
 }

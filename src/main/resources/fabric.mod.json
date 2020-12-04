@@ -3,18 +3,18 @@
   "id": "ae2ao",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "AE2AO",
+  "description": "AE2 Addon by DomamaN202.",
   "authors": [
-    "Me!"
+    "DomamaN202"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/ae2ao",
+    "sources": "https://github.com/Domaman202/AE2AO-Remake"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MIT",
+  "icon": "assets/ae2ao/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -23,13 +23,14 @@
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "ae2ao.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.16.x",
+    "appliedenergistics2": "*"
   },
   "suggests": {
     "another-mod": "*"
