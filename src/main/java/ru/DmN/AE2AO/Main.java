@@ -20,7 +20,7 @@ public class Main implements ModInitializer {
     public void onInitialize() {
         // Config init
         AutoConfig.register(Config.class, Toml4jConfigSerializer::new);
-        config = (Config)AutoConfig.getConfigHolder(Config.class).getConfig();
+        config = AutoConfig.getConfigHolder(Config.class).getConfig();
         // Reflection init
         try {
             getProxyMethod = FastReflection.create(AENetworkPowerBlockEntity.class.getMethod("getProxy"));

@@ -45,16 +45,11 @@ public abstract class PathGridCacheMixin {
 
             startingNode.beginVisit(cv);
 
-            if (cv.isValid()) {
-                if (Main.config.ControllerLimits) {
-                    if (cv.getFound() == this.controllers.size())
-                        this.controllerState = ControllerState.CONTROLLER_ONLINE;
-                    else
-                        this.controllerState = ControllerState.CONTROLLER_CONFLICT;
-                } else
-                    this.controllerState = ControllerState.CONTROLLER_ONLINE;
-            } else
+            if (cv.isValid() && (cv.getFound() == this.controllers.size() || !Main.config.ControllerLimits))
+                this.controllerState = ControllerState.CONTROLLER_ONLINE;
+            else
                 this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+
         }
 
         if (old != this.controllerState) {
