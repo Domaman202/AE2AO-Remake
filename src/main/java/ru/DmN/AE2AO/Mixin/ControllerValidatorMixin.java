@@ -6,6 +6,7 @@ import appeng.me.pathfinding.ControllerValidator;
 import appeng.tile.networking.ControllerBlockEntity;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
@@ -20,6 +21,10 @@ public abstract class ControllerValidatorMixin {
     @Shadow private int maxY;
     @Shadow private int maxZ;
 
+    /**
+     * @author DomamaN202
+     */
+    @Overwrite(remap = false)
     public boolean visitNode(IGridNode n) {
         IGridHost host = n.getMachine();
         if (this.isValid() && host instanceof ControllerBlockEntity) {

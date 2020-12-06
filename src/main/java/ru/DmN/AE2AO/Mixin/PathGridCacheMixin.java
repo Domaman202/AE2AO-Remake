@@ -9,21 +9,24 @@ import appeng.api.util.DimensionalCoord;
 import appeng.me.cache.PathGridCache;
 import appeng.me.pathfinding.ControllerValidator;
 import appeng.tile.networking.ControllerBlockEntity;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Mixin(PathGridCache.class)
 public abstract class PathGridCacheMixin {
-    @Shadow private Set<ControllerBlockEntity> controllers;
-    @Shadow private IGrid myGrid;
+    @Final @Shadow private Set<ControllerBlockEntity> controllers;
+    @Final @Shadow private IGrid myGrid;
     @Shadow private boolean recalculateControllerNextTick = true;
     @Shadow private ControllerState controllerState = ControllerState.NO_CONTROLLER;
 
+    /**
+     * @author DomamaN202
+     */
     @Overwrite(remap = false)
     private void recalcController() {
         this.recalculateControllerNextTick = false;
