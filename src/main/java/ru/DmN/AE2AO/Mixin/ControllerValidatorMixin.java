@@ -8,12 +8,13 @@ import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import ru.DmN.AE2AO.Main;
 
 @Mixin(value = ControllerValidator.class, remap = false)
 public abstract class ControllerValidatorMixin {
-    @Shadow private boolean   isValid = true;
-    @Shadow private int found = 0;
+    @Shadow private boolean isValid;
+    @Shadow private int found;
     @Shadow private int minX;
     @Shadow private int minY;
     @Shadow private int minZ;
@@ -23,6 +24,7 @@ public abstract class ControllerValidatorMixin {
 
     /**
      * @author DomamaN202
+     * @reason Adding a size customization
      */
     @Overwrite public boolean visitNode(IGridNode n) {
         IGridHost host = n.getMachine();

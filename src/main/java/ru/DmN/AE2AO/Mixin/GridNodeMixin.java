@@ -4,6 +4,7 @@ import appeng.me.GridNode;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import ru.DmN.AE2AO.Main;
 
 @Mixin(value = GridNode.class, remap = false)
@@ -12,6 +13,7 @@ public abstract class GridNodeMixin {
 
     /**
      * @author DomamaN202
+     * @reason Add system turn off channels
      */
     @Overwrite private int getUsedChannels()
     {
