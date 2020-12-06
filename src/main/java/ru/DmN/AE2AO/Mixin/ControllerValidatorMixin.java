@@ -10,10 +10,10 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
-@Mixin(ControllerValidator.class)
+@Mixin(value = ControllerValidator.class, remap = false)
 public abstract class ControllerValidatorMixin {
     @Shadow private boolean   isValid = true;
-    @Shadow private int       found = 0;
+    @Shadow private int found = 0;
     @Shadow private int minX;
     @Shadow private int minY;
     @Shadow private int minZ;
@@ -24,12 +24,10 @@ public abstract class ControllerValidatorMixin {
     /**
      * @author DomamaN202
      */
-    @Overwrite(remap = false)
-    public boolean visitNode(IGridNode n) {
+    @Overwrite public boolean visitNode(IGridNode n) {
         IGridHost host = n.getMachine();
         if (isValid && host instanceof ControllerBlockEntity) {
-            ControllerBlockEntity c = (ControllerBlockEntity)host;
-            BlockPos pos = c.getPos();
+            BlockPos pos = ((ControllerBlockEntity) host).getPos();
             this.minX = Math.min(pos.getX(), this.minX);
             this.maxX = Math.max(pos.getX(), this.maxX);
             this.minY = Math.min(pos.getY(), this.minY);

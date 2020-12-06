@@ -17,18 +17,17 @@ import ru.DmN.AE2AO.Main;
 
 import java.util.Set;
 
-@Mixin(PathGridCache.class)
+@Mixin(value = PathGridCache.class, remap = false)
 public abstract class PathGridCacheMixin {
-    @Final @Shadow private Set<ControllerBlockEntity> controllers;
-    @Final @Shadow private IGrid myGrid;
-    @Shadow private boolean recalculateControllerNextTick = true;
-    @Shadow private ControllerState controllerState = ControllerState.NO_CONTROLLER;
+    @Final @Shadow  private Set<ControllerBlockEntity>  controllers;
+    @Final @Shadow  private IGrid                       myGrid;
+    @Shadow         private boolean                     recalculateControllerNextTick = true;
+    @Shadow         private ControllerState             controllerState = ControllerState.NO_CONTROLLER;
 
     /**
      * @author DomamaN202
      */
-    @Overwrite(remap = false)
-    private void recalcController() {
+    @Overwrite private void recalcController() {
         this.recalculateControllerNextTick = false;
         final ControllerState old = this.controllerState;
 

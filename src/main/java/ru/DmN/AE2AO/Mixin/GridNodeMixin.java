@@ -6,16 +6,14 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
-@Mixin(GridNode.class)
+@Mixin(value = GridNode.class, remap = false)
 public abstract class GridNodeMixin {
-    @Shadow
-    private int usedChannels;
+    @Shadow private int usedChannels;
 
     /**
      * @author DomamaN202
      */
-    @Overwrite(remap = false)
-    private int getUsedChannels()
+    @Overwrite private int getUsedChannels()
     {
         return Main.config.DisableChannels ? 1 : usedChannels;
     }
