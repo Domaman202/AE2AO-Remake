@@ -4,8 +4,9 @@
   "package": "ru.DmN.AE2AO.Mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "GridNodeMixin",
+    "AbstractStorageCellMixin",
     "ControllerValidatorMixin",
+    "GridNodeMixin",
     "PathGridCacheMixin"
   ],
   "injectors": {
