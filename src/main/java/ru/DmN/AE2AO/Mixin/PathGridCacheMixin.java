@@ -38,8 +38,8 @@ public abstract class PathGridCacheMixin {
                 return;
             }
 
-            final DimensionalCoord dc = startingNode.getGridBlock().getLocation();
-            final ControllerValidator cv = new ControllerValidator(dc.x, dc.y, dc.z);
+            DimensionalCoord dc = startingNode.getGridBlock().getLocation();
+            ControllerValidator cv = new ControllerValidator(dc.x, dc.y, dc.z);
 
             startingNode.beginVisit(cv);
 

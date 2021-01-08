@@ -13,7 +13,6 @@ public class Main implements ModInitializer {
     // Config
     public static Config config = null;
     // Reflection
-    public static MethodAccessor getProxyMethod = null;
     public static FieldAccessor controllersField = null;
     // Init
     @Override
@@ -23,7 +22,6 @@ public class Main implements ModInitializer {
         config = AutoConfig.getConfigHolder(Config.class).getConfig();
         // Reflection init
         try {
-            getProxyMethod = FastReflection.create(AENetworkPowerBlockEntity.class.getMethod("getProxy"));
             controllersField = FastReflection.create(PathGridCache.class.getDeclaredField("controllers"));
         } catch (Exception exception) {
             exception.printStackTrace();
