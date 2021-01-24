@@ -53,8 +53,8 @@ dependencies {
 	}
 	include "me.sargunvohra.mcmods:autoconfig1u:3.3.1"
 
-	compile 'com.github.Mouse0w0:FastReflection:1.0.1'
-	include 'com.github.Mouse0w0:FastReflection:1.0.1'
+//	compile 'com.github.Mouse0w0:FastReflection:1.0.1'
+//	include 'com.github.Mouse0w0:FastReflection:1.0.1'
 }
 
 processResources {
