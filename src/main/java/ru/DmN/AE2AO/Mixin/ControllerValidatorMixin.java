@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import ru.DmN.AE2AO.Main;
 
 @Mixin(value = ControllerValidator.class, remap = false)
@@ -29,22 +28,24 @@ public abstract class ControllerValidatorMixin {
     @Overwrite public boolean visitNode(IGridNode n) {
         IGridHost host = n.getMachine();
         if (isValid && host instanceof ControllerBlockEntity) {
-            BlockPos pos = ((ControllerBlockEntity) host).getPos();
+            final ControllerBlockEntity c = ((ControllerBlockEntity) host);
+            final BlockPos pos = c.getPos();
+
             this.minX = Math.min(pos.getX(), this.minX);
             this.maxX = Math.max(pos.getX(), this.maxX);
             this.minY = Math.min(pos.getY(), this.minY);
             this.maxY = Math.max(pos.getY(), this.maxY);
             this.minZ = Math.min(pos.getZ(), this.minZ);
             this.maxZ = Math.max(pos.getZ(), this.maxZ);
-            if (this.maxX - this.minX < Main.config.Max_X && this.maxY - this.minY < Main.config.Max_Y && this.maxZ - this.minZ < Main.config.Max_Z) {
+
+            if (this.maxX - this.minX < Main.last_config.Max_X && this.maxY - this.minY < Main.last_config.Max_Y && this.maxZ - this.minZ < Main.last_config.Max_Z) {
                 this.found++;
                 return true;
-            } else {
-                isValid = false;
-                return false;
             }
-        } else {
-            return false;
+
+            isValid = false;
         }
+        
+        return false;
     }
 }

@@ -43,7 +43,7 @@ public abstract class PathGridCacheMixin {
 
             startingNode.beginVisit(cv);
 
-            if (cv.isValid() && (cv.getFound() == this.controllers.size() || !Main.config.ControllerLimits))
+            if (cv.isValid() && (cv.getFound() == this.controllers.size() || !Main.last_config.ControllerLimits))
                 this.controllerState = ControllerState.CONTROLLER_ONLINE;
             else
                 this.controllerState = ControllerState.CONTROLLER_CONFLICT;
