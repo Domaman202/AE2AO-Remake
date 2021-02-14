@@ -8,10 +8,10 @@ import ru.DmN.AE2AO.Main;
 
 @Mixin(AbstractStorageCell.class)
 public abstract class AbstractStorageCellMixin extends AEBaseItem {
-    public AbstractStorageCellMixin(Settings properties) { super(properties); }
+    public AbstractStorageCellMixin(Settings p) { super(p); }
 
     @Override
-    public boolean damage(DamageSource source) {
-        return !Main.last_config.SCFD && super.damage(source);
+    public boolean damage(DamageSource s) {
+        return !Main.lc.SCFD && super.damage(s);
     }
 }

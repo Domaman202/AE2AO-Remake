@@ -10,7 +10,7 @@ public class ClientInit implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(Main.SCI, (m, h, p, ps) -> {
-            Config config = Main.last_config;
+            Config config = Main.lc;
 
             config.ControllerLimits = p.readBoolean();
             config.DisableChannels = p.readBoolean();
@@ -21,11 +21,7 @@ public class ClientInit implements ClientModInitializer {
             config.Max_Z = p.readInt();
 
             CompletableFuture.runAsync(() -> {
-                while (m.player == null) try {
-                    Thread.sleep(1000);
-                } catch (Throwable ignored) {
-                    System.out.println("Fuck, Thread don't sleep!");
-                }
+                while (m.player == null) ;
 
                 m.player.sendMessage(Text.of(
                         "AE2AO config loaded!\nControllerLimits = " + config.ControllerLimits +

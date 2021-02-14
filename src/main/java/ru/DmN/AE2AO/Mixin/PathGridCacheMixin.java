@@ -26,32 +26,32 @@ public abstract class PathGridCacheMixin {
      * @reason Adding controller error system control
      */
     @Overwrite private void recalcController() {
-        this.recalculateControllerNextTick = false;
-        final ControllerState old = this.controllerState;
+        recalculateControllerNextTick = false;
+        final ControllerState o = controllerState;
 
-        if (this.controllers.isEmpty()) {
-            this.controllerState = ControllerState.NO_CONTROLLER;
+        if (controllers.isEmpty()) {
+            controllerState = ControllerState.NO_CONTROLLER;
         } else {
-            final IGridNode startingNode = this.controllers.iterator().next().getGridNode(AEPartLocation.INTERNAL);
-            if (startingNode == null) {
-                this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+            final IGridNode sn = controllers.iterator().next().getGridNode(AEPartLocation.INTERNAL);
+            if (sn == null) {
+                controllerState = ControllerState.CONTROLLER_CONFLICT;
                 return;
             }
 
-            DimensionalCoord dc = startingNode.getGridBlock().getLocation();
-            ControllerValidator cv = new ControllerValidator(dc.x, dc.y, dc.z);
+            DimensionalCoord c = sn.getGridBlock().getLocation();
+            ControllerValidator v = new ControllerValidator(c.x, c.y, c.z);
 
-            startingNode.beginVisit(cv);
+            sn.beginVisit(v);
 
-            if (cv.isValid() && (cv.getFound() == this.controllers.size() || !Main.last_config.ControllerLimits))
-                this.controllerState = ControllerState.CONTROLLER_ONLINE;
+            if (v.isValid() && (v.getFound() == controllers.size() || !Main.lc.ControllerLimits))
+                controllerState = ControllerState.CONTROLLER_ONLINE;
             else
-                this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+                controllerState = ControllerState.CONTROLLER_CONFLICT;
 
         }
 
-        if (old != this.controllerState) {
-            this.myGrid.postEvent(new MENetworkControllerChange());
+        if (o != this.controllerState) {
+            myGrid.postEvent(new MENetworkControllerChange());
         }
     }
 }

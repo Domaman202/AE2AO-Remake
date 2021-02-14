@@ -56,8 +56,8 @@ dependencies {
 //	modCompile "alexiil.mc.lib:libnetworkstack-base:0.4.0"
 //	include "alexiil.mc.lib:libnetworkstack-base:0.4.0"
 
-	compile 'com.github.Mouse0w0:FastReflection:1.0.1'
-	include 'com.github.Mouse0w0:FastReflection:1.0.1'
+//	compile 'com.github.Mouse0w0:FastReflection:1.0.1'
+//	include 'com.github.Mouse0w0:FastReflection:1.0.1'
 }
 
 processResources {

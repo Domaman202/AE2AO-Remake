@@ -16,19 +16,19 @@ import ru.DmN.AE2AO.Main;
 @Mixin(PlayerManager.class)
 public abstract class PlayerManagerMixin {
     @Inject(method = "onPlayerConnect", at = @At("RETURN"))
-    public void onPlayerConnectInject(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
-        PacketByteBuf buf = PacketByteBufs.create();
+    public void onPlayerConnectInject(ClientConnection cc, ServerPlayerEntity p, CallbackInfo ci) {
+        PacketByteBuf b = PacketByteBufs.create();
         //
-        Config config = Main.local_config;
+        Config c = Main.lcc;
 
-        buf.writeBoolean(config.ControllerLimits);
-        buf.writeBoolean(config.DisableChannels);
-        buf.writeBoolean(config.SCFD);
+        b.writeBoolean(c.ControllerLimits);
+        b.writeBoolean(c.DisableChannels);
+        b.writeBoolean(c.SCFD);
 
-        buf.writeInt(config.Max_X);
-        buf.writeInt(config.Max_Y);
-        buf.writeInt(config.Max_Z);
+        b.writeInt(c.Max_X);
+        b.writeInt(c.Max_Y);
+        b.writeInt(c.Max_Z);
         //
-        ServerPlayNetworking.send(player, Main.SCI, buf);
+        ServerPlayNetworking.send(p, Main.SCI, b);
     }
 }

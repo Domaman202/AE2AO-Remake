@@ -26,19 +26,19 @@ public abstract class ControllerValidatorMixin {
      * @reason Adding a size customization
      */
     @Overwrite public boolean visitNode(IGridNode n) {
-        IGridHost host = n.getMachine();
-        if (isValid && host instanceof ControllerBlockEntity) {
-            final ControllerBlockEntity c = ((ControllerBlockEntity) host);
-            final BlockPos pos = c.getPos();
+        IGridHost h = n.getMachine();
 
-            this.minX = Math.min(pos.getX(), this.minX);
-            this.maxX = Math.max(pos.getX(), this.maxX);
-            this.minY = Math.min(pos.getY(), this.minY);
-            this.maxY = Math.max(pos.getY(), this.maxY);
-            this.minZ = Math.min(pos.getZ(), this.minZ);
-            this.maxZ = Math.max(pos.getZ(), this.maxZ);
+        if (isValid && h instanceof ControllerBlockEntity) {
+            BlockPos pos = ((ControllerBlockEntity) h).getPos();
 
-            if (this.maxX - this.minX < Main.last_config.Max_X && this.maxY - this.minY < Main.last_config.Max_Y && this.maxZ - this.minZ < Main.last_config.Max_Z) {
+            minX = Math.min(pos.getX(), minX);
+            maxX = Math.max(pos.getX(), maxX);
+            minY = Math.min(pos.getY(), minY);
+            maxY = Math.max(pos.getY(), maxY);
+            minZ = Math.min(pos.getZ(), minZ);
+            maxZ = Math.max(pos.getZ(), maxZ);
+
+            if (maxX - minX < Main.lc.Max_X && maxY - minY < Main.lc.Max_Y && maxZ - minZ < Main.lc.Max_Z) {
                 this.found++;
                 return true;
             }
