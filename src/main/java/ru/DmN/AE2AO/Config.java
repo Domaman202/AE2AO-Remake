@@ -1,8 +1,8 @@
 package ru.DmN.AE2AO;
 
-import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
+import me.shedaniel.autoconfig.ConfigData;
 
-@me.sargunvohra.mcmods.autoconfig1u.annotation.Config(name = "ae2ao")
+@me.shedaniel.autoconfig.annotation.Config(name = "ae2ao")
 public class Config implements ConfigData, Cloneable {
     public boolean DisableChannels = false;
     public boolean ControllerLimits = false;
