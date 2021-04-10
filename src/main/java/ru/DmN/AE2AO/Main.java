@@ -21,7 +21,6 @@ public class Main implements ModInitializer {
     // Packet ID
     // send config id
     public static final Identifier SCI = new Identifier("ae2ao", "send_config");
-
     // Init
     @Override
     public void onInitialize() {
