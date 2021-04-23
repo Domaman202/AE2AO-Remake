@@ -1,17 +1,19 @@
 package ru.DmN.AE2AO;
 
 import appeng.tile.networking.ControllerBlockEntity;
+import com.moandjiezana.toml.Toml;
 import com.mojang.brigadier.Command;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.loader.FabricLoader;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 public class Main implements ModInitializer {
@@ -25,9 +27,26 @@ public class Main implements ModInitializer {
     @Override
     public void onInitialize() {
         // Config init
-        AutoConfig.register(Config.class, Toml4jConfigSerializer::new);
-        lcc = AutoConfig.getConfigHolder(Config.class).getConfig();
-        lc = lcc.clone();
+        try {
+            File conf = new File(FabricLoader.INSTANCE.getConfigDirectory() + File.separator + "ae2ao.toml");
+
+            if (conf.createNewFile()) {
+                FileWriter writer = new FileWriter(conf);
+                writer.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false");
+                writer.flush();
+                writer.close();
+
+                lcc = new Config();
+                lc = new Config();
+            } else {
+                Toml res = new Toml().read(conf);
+                lcc = res.to(Config.class);
+                lc = lcc.clone();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         // Commands init
         CommandRegistrationCallback.EVENT.register((d, x) -> {

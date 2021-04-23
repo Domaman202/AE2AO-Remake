@@ -20,7 +20,7 @@ public class ClientInit implements ClientModInitializer {
             config.Max_Y = p.readInt();
             config.Max_Z = p.readInt();
 
-            CompletableFuture.runAsync(() -> {
+            Thread printer = new Thread(() -> {
                 while (m.player == null) ;
 
                 m.player.sendMessage(Text.of(
@@ -32,6 +32,9 @@ public class ClientInit implements ClientModInitializer {
                                 "\nMax_Z = " + config.Max_Z
                 ), false);
             });
+
+            printer.setDaemon(true);
+            CompletableFuture.runAsync(printer);
         });
     }
 }

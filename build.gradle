@@ -49,10 +49,8 @@ dependencies {
 	modCompileOnly ":appliedenergistics2-fabric-0.0.0-SNAPSHOT-dev"
 	modRuntime "appeng:appliedenergistics2-fabric:8.1.0-alpha.13"
 
-	modApi("me.shedaniel.cloth:cloth-config-fabric:4.11.19") {
-		exclude(group: "net.fabricmc.fabric-api")
-	}
-	include "me.shedaniel.cloth:cloth-config-fabric:4.11.19"
+	implementation 'com.moandjiezana.toml:toml4j:0.7.2'
+	include 'com.moandjiezana.toml:toml4j:0.7.2'
 }
 
 processResources {
