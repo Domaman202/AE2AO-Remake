@@ -47,7 +47,6 @@ public class Main implements ModInitializer {
             e.printStackTrace();
         }
 
-
         // Commands init
         CommandRegistrationCallback.EVENT.register((d, x) -> {
             d.register(CommandManager.literal("ae2ao_recalc").executes(c -> {
