@@ -12,6 +12,7 @@ import appeng.tile.networking.ControllerBlockEntity;
 import net.minecraft.util.math.BlockPos;
 import org.lwjgl.system.CallbackI;
 import org.spongepowered.asm.mixin.*;
+import ru.DmN.AE2AO.Config;
 import ru.DmN.AE2AO.Main;
 
 import java.util.*;
@@ -33,6 +34,21 @@ public abstract class PathGridCacheMixin {
 
         if (controllers.isEmpty()) {
             controllerState = ControllerState.NO_CONTROLLER;
+        } else if (Main.lc.ControllerLimits) {
+            IGridNode startingNode = this.controllers.iterator().next().getGridNode(AEPartLocation.INTERNAL);
+            if (startingNode == null) {
+                this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+                return;
+            }
+
+            DimensionalCoord dc = startingNode.getGridBlock().getLocation();
+            ControllerValidator cv = new ControllerValidator(dc.x, dc.y, dc.z);
+            startingNode.beginVisit(cv);
+            if (cv.isValid() && cv.getFound() == this.controllers.size()) {
+                this.controllerState = ControllerState.CONTROLLER_ONLINE;
+            } else {
+                this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+            }
         } else {
             for (ControllerBlockEntity controller : controllers) {
                 final IGridNode node = controller.getGridNode(AEPartLocation.INTERNAL);
