@@ -19,22 +19,6 @@ public class ClientInit implements ClientModInitializer {
             config.Max_X = p.readInt();
             config.Max_Y = p.readInt();
             config.Max_Z = p.readInt();
-
-            Thread printer = new Thread(() -> {
-                while (m.player == null) ;
-
-                m.player.sendMessage(Text.of(
-                        "AE2AO config loaded!\nControllerLimits = " + config.ControllerLimits +
-                                "\nDisableChannels = " + config.DisableChannels +
-                                "\nSCFD = " + config.SCFD +
-                                "\nMax_X = " + config.Max_X +
-                                "\nMax_Y = " + config.Max_Y +
-                                "\nMax_Z = " + config.Max_Z
-                ), false);
-            });
-
-            printer.setDaemon(true);
-            CompletableFuture.runAsync(printer);
         });
     }
 }
