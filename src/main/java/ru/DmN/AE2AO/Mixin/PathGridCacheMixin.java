@@ -34,8 +34,6 @@ public abstract class PathGridCacheMixin {
         if (controllers.isEmpty()) {
             controllerState = ControllerState.NO_CONTROLLER;
         } else {
-            boolean valid = true;
-
             for (ControllerBlockEntity controller : controllers) {
                 final IGridNode node = controller.getGridNode(AEPartLocation.INTERNAL);
                 if (node == null) {
@@ -48,31 +46,17 @@ public abstract class PathGridCacheMixin {
 
                 node.beginVisit(cv);
 
-                if (!cv.isValid())
-                    valid = false;
+                if (!cv.isValid()) {
+                    this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+                    return;
+                }
             }
 
-            if (valid)
-                this.controllerState = ControllerState.CONTROLLER_ONLINE;
-            else
-                this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+            this.controllerState = ControllerState.CONTROLLER_ONLINE;
         }
 
         if (o != this.controllerState) {
             myGrid.postEvent(new MENetworkControllerChange());
         }
-    }
-
-    private static boolean validate(BlockPos pos1, BlockPos pos2) {
-        return validate_(pos1.add(0, 0, -1), pos2) ||
-                validate_(pos1.add(0, 0, 1), pos2) ||
-                validate_(pos1.add(0, -1, 0), pos2) ||
-                validate_(pos1.add(0, 1, 0), pos2) ||
-                validate_(pos1.add(-1, 0, 0), pos2) ||
-                validate_(pos1.add(1, 0, 0), pos2);
-    }
-
-    private static boolean validate_(BlockPos pos1, BlockPos pos2) {
-        return pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY() && pos1.getZ() == pos2.getZ();
     }
 }
