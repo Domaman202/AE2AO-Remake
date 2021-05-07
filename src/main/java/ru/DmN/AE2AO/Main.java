@@ -48,25 +48,27 @@ public class Main implements ModInitializer {
         }
 
         // Commands init
-        CommandRegistrationCallback.EVENT.register((d, x) -> d.register(CommandManager.literal("ae2ao_recalc").executes(c -> {
-            World w = c.getSource().getWorld();
+        CommandRegistrationCallback.EVENT.register((d, x) -> {
+            d.register(CommandManager.literal("ae2ao_recalc").executes(c -> {
+                World w = c.getSource().getWorld();
 
-            List<BlockEntity> e1 = w.blockEntities;
-            List<BlockEntity> e2 = w.tickingBlockEntities;
+                List<BlockEntity> e1 = w.blockEntities;
+                List<BlockEntity> e2 = w.tickingBlockEntities;
 
-            for (int i = 0; i < e1.size(); i++) {
-                if (e1.get(i) instanceof ControllerBlockEntity) {
-                    e1.set(i, ((BlockEntityProvider) w.getBlockState(e1.remove(i).getPos()).getBlock()).createBlockEntity(w));
+                for (int i = 0; i < e1.size(); i++) {
+                    if (e1.get(i) instanceof ControllerBlockEntity) {
+                        e1.set(i, ((BlockEntityProvider) w.getBlockState(e1.remove(i).getPos()).getBlock()).createBlockEntity(w));
+                    }
                 }
-            }
 
-            for (int i = 0; i < e2.size(); i++) {
-                if (e2.get(i) instanceof ControllerBlockEntity) {
-                    e2.set(i, ((BlockEntityProvider) w.getBlockState(e2.remove(i).getPos()).getBlock()).createBlockEntity(w));
+                for (int i = 0; i < e2.size(); i++) {
+                    if (e2.get(i) instanceof ControllerBlockEntity) {
+                        e2.set(i, ((BlockEntityProvider) w.getBlockState(e2.remove(i).getPos()).getBlock()).createBlockEntity(w));
+                    }
                 }
-            }
 
-            return Command.SINGLE_SUCCESS;
-        })));
+                return Command.SINGLE_SUCCESS;
+            }));
+        });
     }
 }
