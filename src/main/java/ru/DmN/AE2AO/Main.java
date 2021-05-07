@@ -5,7 +5,7 @@ import com.moandjiezana.toml.Toml;
 import com.mojang.brigadier.Command;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
-import net.fabricmc.loader.FabricLoader;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.server.command.CommandManager;
@@ -28,7 +28,7 @@ public class Main implements ModInitializer {
     public void onInitialize() {
         // Config init
         try {
-            File conf = new File(FabricLoader.INSTANCE.getConfigDirectory() + File.separator + "ae2ao.toml");
+            File conf = new File(FabricLoader.getInstance().getConfigDir() + File.separator + "ae2ao.toml");
 
             if (conf.createNewFile()) {
                 FileWriter writer = new FileWriter(conf);
@@ -48,27 +48,25 @@ public class Main implements ModInitializer {
         }
 
         // Commands init
-        CommandRegistrationCallback.EVENT.register((d, x) -> {
-            d.register(CommandManager.literal("ae2ao_recalc").executes(c -> {
-                World w = c.getSource().getWorld();
+        CommandRegistrationCallback.EVENT.register((d, x) -> d.register(CommandManager.literal("ae2ao_recalc").executes(c -> {
+            World w = c.getSource().getWorld();
 
-                List<BlockEntity> e1 = w.blockEntities;
-                List<BlockEntity> e2 = w.tickingBlockEntities;
+            List<BlockEntity> e1 = w.blockEntities;
+            List<BlockEntity> e2 = w.tickingBlockEntities;
 
-                for (int i = 0; i < e1.size(); i++) {
-                    if (e1.get(i) instanceof ControllerBlockEntity) {
-                        e1.set(i, ((BlockEntityProvider) w.getBlockState(e1.remove(i).getPos()).getBlock()).createBlockEntity(w));
-                    }
+            for (int i = 0; i < e1.size(); i++) {
+                if (e1.get(i) instanceof ControllerBlockEntity) {
+                    e1.set(i, ((BlockEntityProvider) w.getBlockState(e1.remove(i).getPos()).getBlock()).createBlockEntity(w));
                 }
+            }
 
-                for (int i = 0; i < e2.size(); i++) {
-                    if (e2.get(i) instanceof ControllerBlockEntity) {
-                        e2.set(i, ((BlockEntityProvider) w.getBlockState(e2.remove(i).getPos()).getBlock()).createBlockEntity(w));
-                    }
+            for (int i = 0; i < e2.size(); i++) {
+                if (e2.get(i) instanceof ControllerBlockEntity) {
+                    e2.set(i, ((BlockEntityProvider) w.getBlockState(e2.remove(i).getPos()).getBlock()).createBlockEntity(w));
                 }
+            }
 
-                return Command.SINGLE_SUCCESS;
-            }));
-        });
+            return Command.SINGLE_SUCCESS;
+        })));
     }
 }

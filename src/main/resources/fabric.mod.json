@@ -35,8 +35,5 @@
     "fabric": "*",
     "minecraft": "*",
     "appliedenergistics2": "*"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }

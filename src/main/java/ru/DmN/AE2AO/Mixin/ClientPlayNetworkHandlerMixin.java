@@ -3,7 +3,7 @@ package ru.DmN.AE2AO.Mixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
-import net.minecraft.text.Text;
+import net.minecraft.text.LiteralText;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,7 +19,7 @@ public class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onGameJoin", at = @At("RETURN"))
     public void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
         Config config = Main.lc;
-        client.player.sendMessage(Text.of(
+        client.player.sendMessage(new LiteralText(
                 "AE2AO config loaded!\nControllerLimits = " + config.ControllerLimits +
                         "\nDisableChannels = " + config.DisableChannels +
                         "\nSCFD = " + config.SCFD +
