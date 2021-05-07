@@ -13,7 +13,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class Main implements ModInitializer {
@@ -31,10 +33,10 @@ public class Main implements ModInitializer {
             File conf = new File(FabricLoader.getInstance().getConfigDir() + File.separator + "ae2ao.toml");
 
             if (conf.createNewFile()) {
-                FileWriter writer = new FileWriter(conf);
-                writer.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false");
-                writer.flush();
-                writer.close();
+                FileOutputStream stream = new FileOutputStream(conf);
+                stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false".getBytes(StandardCharsets.UTF_8));
+                stream.flush();
+                stream.close();
 
                 lcc = new Config();
                 lc = new Config();
