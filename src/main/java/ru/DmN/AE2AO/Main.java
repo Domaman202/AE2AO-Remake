@@ -41,8 +41,7 @@ public class Main implements ModInitializer {
                 lcc = new Config();
                 lc = new Config();
             } else {
-                Toml res = new Toml().read(conf);
-                lcc = res.to(Config.class);
+                lcc = new Toml().read(conf).to(Config.class);
                 lc = lcc.clone();
             }
         } catch (Exception e) {
