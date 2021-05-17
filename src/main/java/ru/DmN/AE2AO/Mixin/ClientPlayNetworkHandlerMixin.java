@@ -18,14 +18,16 @@ public class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onGameJoin", at = @At("RETURN"))
     public void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
-        Config config = Main.lc;
-        client.player.sendMessage(new LiteralText(
-                "AE2AO config loaded!\nControllerLimits = " + config.ControllerLimits +
-                        "\nDisableChannels = " + config.DisableChannels +
-                        "\nSCFD = " + config.SCFD +
-                        "\nMax_X = " + config.Max_X +
-                        "\nMax_Y = " + config.Max_Y +
-                        "\nMax_Z = " + config.Max_Z
-        ), false);
+        if (Main.lc.ChatInfo) {
+            Config config = Main.lc;
+            client.player.sendMessage(new LiteralText(
+                    "AE2AO config loaded!\nControllerLimits = " + config.ControllerLimits +
+                            "\nDisableChannels = " + config.DisableChannels +
+                            "\nSCFD = " + config.SCFD +
+                            "\nMax_X = " + config.Max_X +
+                            "\nMax_Y = " + config.Max_Y +
+                            "\nMax_Z = " + config.Max_Z
+            ), false);
+        }
     }
 }

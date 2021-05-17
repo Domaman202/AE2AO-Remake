@@ -24,6 +24,7 @@ public abstract class PlayerManagerMixin {
         b.writeBoolean(c.ControllerLimits);
         b.writeBoolean(c.DisableChannels);
         b.writeBoolean(c.SCFD);
+        b.writeBoolean(c.ChatInfo);
 
         b.writeInt(c.Max_X);
         b.writeInt(c.Max_Y);

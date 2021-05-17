@@ -10,6 +10,8 @@ public class Config implements Cloneable {
     // Storage Cell Fire Damage
     public boolean SCFD = false;
     //
+    public boolean ChatInfo = true;
+    //
     public Config clone() throws CloneNotSupportedException {
         return (Config) super.clone();
     }

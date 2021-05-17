@@ -34,7 +34,7 @@ public class Main implements ModInitializer {
 
             if (conf.createNewFile()) {
                 FileOutputStream stream = new FileOutputStream(conf);
-                stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false".getBytes(StandardCharsets.UTF_8));
+                stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false\nChatInfo = true".getBytes(StandardCharsets.UTF_8));
                 stream.flush();
                 stream.close();
 
