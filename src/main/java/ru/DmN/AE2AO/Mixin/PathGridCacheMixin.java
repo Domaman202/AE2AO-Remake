@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 @Mixin(value = PathGridCache.class, remap = false)
@@ -50,7 +51,11 @@ public class PathGridCacheMixin {
                     this.controllerState = ControllerState.CONTROLLER_CONFLICT;
                 }
             } else {
+                boolean X = true; // TODO PLEASE FIX THIS
+                ArrayList<Object> _controllers = new ArrayList<>();
                 for (Object controller : controllers) {
+                    _controllers.add(controller);
+
                     final IGridNode node = (IGridNode) Main.method2.invokeWithArguments(Main.class1.cast(controller), AEPartLocation.INTERNAL);
                     if (node == null) {
                         this.controllerState = ControllerState.CONTROLLER_CONFLICT;
@@ -63,12 +68,21 @@ public class PathGridCacheMixin {
                     node.beginVisit(cv);
 
                     if (!cv.isValid()) {
+                        X = false; // TODO PLEASE FIX THIS
                         this.controllerState = ControllerState.CONTROLLER_CONFLICT;
-                        return;
+                        break;
                     }
                 }
 
-                this.controllerState = ControllerState.CONTROLLER_ONLINE;
+                if (X) // TODO PLEASE FIX THIS
+                    this.controllerState = ControllerState.CONTROLLER_ONLINE;
+                else {
+                    for (Object controller : this.controllers)
+                        for (Object controller_ : this.controllers)
+                            if (controller == controller_)
+                                Main.field1.set(controller, false);
+                    return;
+                }
             }
 
             if (o != this.controllerState) {

@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Main implements ModInitializer {
     public static Class<?> class1 = null;
     public static MethodHandle method1 = null;
     public static MethodHandle method2 = null;
+    public static Field field1 = null;
     // Config
     public static Config lcc = null;
     public static Config lc = null;
@@ -49,6 +51,9 @@ public class Main implements ModInitializer {
 
             method1 = lookup.findVirtual(class1, "getPos", MethodType.methodType(BlockPos.class));
             method2 = lookup.findVirtual(class1, "getGridNode", MethodType.methodType(IGridNode.class, AEPartLocation.class));
+
+            field1 = class1.getDeclaredField("isValid");
+            field1.setAccessible(true);
 
             // Config init
             File conf = new File(FabricLoader.getInstance().getConfigDir() + File.separator + "ae2ao.toml");
