@@ -14,7 +14,7 @@ import ru.DmN.AE2AO.Config;
 import ru.DmN.AE2AO.Main;
 
 @Mixin(PlayerManager.class)
-public abstract class PlayerManagerMixin {
+public class PlayerManagerMixin {
     @Inject(method = "onPlayerConnect", at = @At("RETURN"))
     public void onPlayerConnectInject(ClientConnection cc, ServerPlayerEntity p, CallbackInfo ci) {
         PacketByteBuf b = PacketByteBufs.create();
