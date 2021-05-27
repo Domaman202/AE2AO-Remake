@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
 @Mixin(value = GridNode.class, remap = false)
-public abstract class GridNodeMixin {
+public class GridNodeMixin {
     @Shadow private int usedChannels;
 
     /**

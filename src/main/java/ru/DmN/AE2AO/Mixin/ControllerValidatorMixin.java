@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
 @Mixin(value = ControllerValidator.class, remap = false)
-public abstract class ControllerValidatorMixin {
+public class ControllerValidatorMixin {
     @Shadow private boolean isValid;
     @Shadow private int found;
     @Shadow private int minX;
