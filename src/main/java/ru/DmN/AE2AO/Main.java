@@ -1,6 +1,7 @@
 package ru.DmN.AE2AO;
 
-import appeng.tile.networking.ControllerBlockEntity;
+import appeng.api.networking.IGridNode;
+import appeng.api.util.AEPartLocation;
 import com.moandjiezana.toml.Toml;
 import com.mojang.brigadier.Command;
 import net.fabricmc.api.ModInitializer;
@@ -10,15 +11,23 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class Main implements ModInitializer {
+    //
+    // ClassControllerEntity
+    public static Class<?> class1 = null;
+    public static MethodHandle method1 = null;
+    public static MethodHandle method2 = null;
     // Config
     public static Config lcc = null;
     public static Config lc = null;
@@ -28,8 +37,20 @@ public class Main implements ModInitializer {
     // Init
     @Override
     public void onInitialize() {
-        // Config init
         try {
+            //
+            try {
+                class1 = Class.forName("appeng.tile.networking.ControllerBlockEntity");
+            } catch (ClassNotFoundException e) {
+                class1 = Class.forName("appeng.tile.networking.ControllerTileEntity");
+            }
+
+            MethodHandles.Lookup lookup = MethodHandles.lookup();
+
+            method1 = lookup.findVirtual(class1, "getPos", MethodType.methodType(BlockPos.class));
+            method2 = lookup.findVirtual(class1, "getGridNode", MethodType.methodType(IGridNode.class, AEPartLocation.class));
+
+            // Config init
             File conf = new File(FabricLoader.getInstance().getConfigDir() + File.separator + "ae2ao.toml");
 
             if (conf.createNewFile()) {
@@ -57,13 +78,13 @@ public class Main implements ModInitializer {
                 List<BlockEntity> e2 = w.tickingBlockEntities;
 
                 for (int i = 0; i < e1.size(); i++) {
-                    if (e1.get(i) instanceof ControllerBlockEntity) {
+                    if (class1.isInstance(e1.get(i))) {
                         e1.set(i, ((BlockEntityProvider) w.getBlockState(e1.remove(i).getPos()).getBlock()).createBlockEntity(w));
                     }
                 }
 
                 for (int i = 0; i < e2.size(); i++) {
-                    if (e2.get(i) instanceof ControllerBlockEntity) {
+                    if (class1.isInstance(e2.get(i))) {
                         e2.set(i, ((BlockEntityProvider) w.getBlockState(e2.remove(i).getPos()).getBlock()).createBlockEntity(w));
                     }
                 }

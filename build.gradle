@@ -44,7 +44,7 @@ dependencies {
 
 	modImplementation "alexiil.mc.lib:libblockattributes-all:0.8.9-pre.2"
 
-	modImplementation "appeng:appliedenergistics2-fabric:8.1.0-alpha.13"
+	modImplementation "appeng:appliedenergistics2-fabric:8.3.0-alpha.2"
 
 	implementation 'com.moandjiezana.toml:toml4j:0.7.2'
 	include 'com.moandjiezana.toml:toml4j:0.7.2'

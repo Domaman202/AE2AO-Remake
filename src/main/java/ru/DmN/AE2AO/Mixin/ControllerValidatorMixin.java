@@ -3,7 +3,6 @@ package ru.DmN.AE2AO.Mixin;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.IGridNode;
 import appeng.me.pathfinding.ControllerValidator;
-import appeng.tile.networking.ControllerBlockEntity;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -26,24 +25,28 @@ public abstract class ControllerValidatorMixin {
      * @reason Adding a size customization
      */
     @Overwrite public boolean visitNode(IGridNode n) {
-        IGridHost h = n.getMachine();
+        try {
+            IGridHost h = n.getMachine();
 
-        if (isValid && h instanceof ControllerBlockEntity) {
-            BlockPos pos = ((ControllerBlockEntity) h).getPos();
+            if (isValid && Main.class1.isInstance(h)) {
+                BlockPos pos = (BlockPos) Main.method1.invokeWithArguments(Main.class1.cast(h));
 
-            minX = Math.min(pos.getX(), minX);
-            maxX = Math.max(pos.getX(), maxX);
-            minY = Math.min(pos.getY(), minY);
-            maxY = Math.max(pos.getY(), maxY);
-            minZ = Math.min(pos.getZ(), minZ);
-            maxZ = Math.max(pos.getZ(), maxZ);
+                minX = Math.min(pos.getX(), minX);
+                maxX = Math.max(pos.getX(), maxX);
+                minY = Math.min(pos.getY(), minY);
+                maxY = Math.max(pos.getY(), maxY);
+                minZ = Math.min(pos.getZ(), minZ);
+                maxZ = Math.max(pos.getZ(), maxZ);
 
-            if (maxX - minX < Main.lc.Max_X && maxY - minY < Main.lc.Max_Y && maxZ - minZ < Main.lc.Max_Z) {
-                this.found++;
-                return true;
+                if (maxX - minX < Main.lc.Max_X && maxY - minY < Main.lc.Max_Y && maxZ - minZ < Main.lc.Max_Z) {
+                    this.found++;
+                    return true;
+                }
+
+                isValid = false;
             }
-
-            isValid = false;
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
 
         return false;

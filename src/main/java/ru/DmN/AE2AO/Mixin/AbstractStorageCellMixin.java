@@ -8,7 +8,7 @@ import ru.DmN.AE2AO.Main;
 
 @Mixin(AbstractStorageCell.class)
 public abstract class AbstractStorageCellMixin extends AEBaseItem {
-    public AbstractStorageCellMixin(Settings p) { super(p); }
+    protected AbstractStorageCellMixin(Settings p) { super(p); }
 
     @Override
     public boolean damage(DamageSource s) {
