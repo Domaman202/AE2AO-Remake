@@ -19,77 +19,76 @@ import java.util.Set;
 
 @Mixin(value = PathGridCache.class, remap = false)
 public class PathGridCacheMixin {
-    @Final @Shadow  private Set<?>                      controllers;
-    @Final @Shadow  private IGrid                       myGrid;
-    @Shadow         private boolean                     recalculateControllerNextTick;
-    @Shadow         private ControllerState             controllerState;
+    @Final
+    @Shadow
+    private Set<?> controllers;
+    @Final
+    @Shadow
+    private IGrid myGrid;
+    @Shadow
+    private boolean recalculateControllerNextTick;
+    @Shadow
+    private ControllerState controllerState;
 
     /**
      * @author DomamaN202
      * @reason Adding controller error system control
      */
-    @Overwrite private void recalcController() {
-        try {
-            recalculateControllerNextTick = false;
-            final ControllerState o = controllerState;
+    @Overwrite
+    private void recalcController() throws Throwable {
+        recalculateControllerNextTick = false;
+        final ControllerState o = controllerState;
 
-            if (controllers.isEmpty()) {
-                controllerState = ControllerState.NO_CONTROLLER;
-            } else if (Main.lc.ControllerLimits) {
-                IGridNode startingNode = (IGridNode) Main.method2.invokeWithArguments(Main.class1.cast(this.controllers.iterator().next()), AEPartLocation.INTERNAL);
-                if (startingNode == null) {
-                    this.controllerState = ControllerState.CONTROLLER_CONFLICT;
-                    return;
-                }
+        if (controllers.isEmpty()) {
+            controllerState = ControllerState.NO_CONTROLLER;
+        } else if (Main.lc.ControllerLimits) {
+            IGridNode startingNode = (IGridNode) Main.method2.invokeWithArguments(Main.class1.cast(this.controllers.iterator().next()), AEPartLocation.INTERNAL);
+            if (startingNode == null) {
+                this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+                return;
+            }
 
-                DimensionalCoord dc = startingNode.getGridBlock().getLocation();
-                ControllerValidator cv = new ControllerValidator(dc.x, dc.y, dc.z);
-                startingNode.beginVisit(cv);
-                if (cv.isValid() && cv.getFound() == this.controllers.size()) {
-                    this.controllerState = ControllerState.CONTROLLER_ONLINE;
-                } else {
-                    this.controllerState = ControllerState.CONTROLLER_CONFLICT;
-                }
+            DimensionalCoord dc = startingNode.getGridBlock().getLocation();
+            ControllerValidator cv = new ControllerValidator(dc.x, dc.y, dc.z);
+            startingNode.beginVisit(cv);
+            if (cv.isValid() && cv.getFound() == this.controllers.size()) {
+                this.controllerState = ControllerState.CONTROLLER_ONLINE;
             } else {
-                boolean X = true; // TODO PLEASE FIX THIS
-                ArrayList<Object> _controllers = new ArrayList<>();
-                for (Object controller : controllers) {
-                    _controllers.add(controller);
-
-                    final IGridNode node = (IGridNode) Main.method2.invokeWithArguments(Main.class1.cast(controller), AEPartLocation.INTERNAL);
-                    if (node == null) {
-                        this.controllerState = ControllerState.CONTROLLER_CONFLICT;
-                        return;
-                    }
-
-                    final DimensionalCoord dc = node.getGridBlock().getLocation();
-                    final ControllerValidator cv = new ControllerValidator(dc.x, dc.y, dc.z);
-
-                    node.beginVisit(cv);
-
-                    if (!cv.isValid()) {
-                        X = false; // TODO PLEASE FIX THIS
-                        this.controllerState = ControllerState.CONTROLLER_CONFLICT;
-                        break;
-                    }
-                }
-
-                if (X) // TODO PLEASE FIX THIS
-                    this.controllerState = ControllerState.CONTROLLER_ONLINE;
-                else {
-                    for (Object controller : this.controllers)
-                        for (Object controller_ : this.controllers)
-                            if (controller == controller_)
-                                Main.field1.set(controller, false);
+                this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+            }
+        } else {
+            boolean valid = true;
+            for (Object controller : controllers) {
+                final IGridNode node = (IGridNode) Main.method2.invokeWithArguments(Main.class1.cast(controller), AEPartLocation.INTERNAL);
+                if (node == null) {
+                    this.controllerState = ControllerState.CONTROLLER_CONFLICT;
                     return;
                 }
+
+                final DimensionalCoord dc = node.getGridBlock().getLocation();
+                final ControllerValidator cv = new ControllerValidator(dc.x, dc.y, dc.z);
+
+                node.beginVisit(cv);
+
+                if (!cv.isValid()) {
+                    this.controllerState = ControllerState.CONTROLLER_CONFLICT;
+                    valid = false;
+                    break;
+                }
             }
 
-            if (o != this.controllerState) {
-                myGrid.postEvent(new MENetworkControllerChange());
+            if (valid)
+                this.controllerState = ControllerState.CONTROLLER_ONLINE;
+            else {
+                for (Object controller : this.controllers)
+                    if (this.controllers.contains(controller))
+                        Main.field1.set(controller, false);
+                return;
             }
-        } catch (Throwable t) {
-            t.printStackTrace();
+        }
+
+        if (o != this.controllerState) {
+            myGrid.postEvent(new MENetworkControllerChange());
         }
     }
 }
