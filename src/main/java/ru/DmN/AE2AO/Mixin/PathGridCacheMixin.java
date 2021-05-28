@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 @Mixin(value = PathGridCache.class, remap = false)
