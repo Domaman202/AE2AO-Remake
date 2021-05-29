@@ -26,10 +26,10 @@ import java.util.List;
 public class Main implements ModInitializer {
     //
     // ClassControllerEntity
-    public static Class<?> class1 = null;
-    public static MethodHandle method1 = null;
-    public static MethodHandle method2 = null;
-    public static Field field1 = null;
+    public static Class<?> cce = null;
+    public static MethodHandle methodGetPos = null;
+    public static MethodHandle methodGetGridNode = null;
+    public static Field fieldIsValid = null;
     // Config
     public static Config lcc = null;
     public static Config lc = null;
@@ -42,27 +42,26 @@ public class Main implements ModInitializer {
         try {
             //
             try {
-                class1 = Class.forName("appeng.tile.networking.ControllerBlockEntity");
+                cce = Class.forName("appeng.tile.networking.ControllerBlockEntity");
             } catch (ClassNotFoundException e) {
-                class1 = Class.forName("appeng.tile.networking.ControllerTileEntity");
+                cce = Class.forName("appeng.tile.networking.ControllerTileEntity");
             }
 
             MethodHandles.Lookup lookup = MethodHandles.lookup();
 
-            method1 = lookup.findVirtual(class1, "getPos", MethodType.methodType(BlockPos.class));
-            method2 = lookup.findVirtual(class1, "getGridNode", MethodType.methodType(IGridNode.class, AEPartLocation.class));
+            methodGetPos = lookup.findVirtual(cce, "getPos", MethodType.methodType(BlockPos.class));
+            methodGetGridNode = lookup.findVirtual(cce, "getGridNode", MethodType.methodType(IGridNode.class, AEPartLocation.class));
 
-            field1 = class1.getDeclaredField("isValid");
-            field1.setAccessible(true);
+            fieldIsValid = cce.getDeclaredField("isValid");
+            fieldIsValid.setAccessible(true);
 
             // Config init
             File conf = new File(FabricLoader.getInstance().getConfigDir() + File.separator + "ae2ao.toml");
 
             if (conf.createNewFile()) {
-                FileOutputStream stream = new FileOutputStream(conf);
-                stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false\nChatInfo = true".getBytes(StandardCharsets.UTF_8));
-                stream.flush();
-                stream.close();
+                try (FileOutputStream stream = new FileOutputStream(conf)) {
+                    stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false\nChatInfo = true".getBytes(StandardCharsets.UTF_8));
+                }
 
                 lcc = new Config();
                 lc = new Config();
@@ -83,13 +82,13 @@ public class Main implements ModInitializer {
                 List<BlockEntity> e2 = w.tickingBlockEntities;
 
                 for (int i = 0; i < e1.size(); i++) {
-                    if (class1.isInstance(e1.get(i))) {
+                    if (cce.isInstance(e1.get(i))) {
                         e1.set(i, ((BlockEntityProvider) w.getBlockState(e1.remove(i).getPos()).getBlock()).createBlockEntity(w));
                     }
                 }
 
                 for (int i = 0; i < e2.size(); i++) {
-                    if (class1.isInstance(e2.get(i))) {
+                    if (cce.isInstance(e2.get(i))) {
                         e2.set(i, ((BlockEntityProvider) w.getBlockState(e2.remove(i).getPos()).getBlock()).createBlockEntity(w));
                     }
                 }

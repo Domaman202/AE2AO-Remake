@@ -36,8 +36,8 @@ public class ControllerValidatorMixin {
     public boolean visitNode(IGridNode n) throws Throwable {
         IGridHost h = n.getMachine();
 
-        if (isValid && Main.class1.isInstance(h)) {
-            BlockPos pos = (BlockPos) Main.method1.invokeWithArguments(Main.class1.cast(h));
+        if (isValid && Main.cce.isInstance(h)) {
+            BlockPos pos = (BlockPos) Main.methodGetPos.invokeWithArguments(Main.cce.cast(h));
 
             minX = Math.min(pos.getX(), minX);
             maxX = Math.max(pos.getX(), maxX);
