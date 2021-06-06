@@ -40,8 +40,8 @@ public class PathGridCacheMixin {
 
         if (controllers.isEmpty()) {
             controllerState = ControllerState.NO_CONTROLLER;
-        } else if (Main.lc.ControllerLimits) {
-            IGridNode startingNode = (IGridNode) Main.methodGetGridNode.invokeWithArguments(Main.cce.cast(this.controllers.iterator().next()), AEPartLocation.INTERNAL);
+        } else if (Main.LC.CL) {
+            IGridNode startingNode = (IGridNode) Main.MGGN.invokeWithArguments(Main.CCE.cast(this.controllers.iterator().next()), AEPartLocation.INTERNAL);
             if (startingNode == null) {
                 this.controllerState = ControllerState.CONTROLLER_CONFLICT;
                 return;
@@ -58,7 +58,7 @@ public class PathGridCacheMixin {
         } else {
             boolean valid = true;
             for (Object controller : controllers) {
-                final IGridNode node = (IGridNode) Main.methodGetGridNode.invokeWithArguments(Main.cce.cast(controller), AEPartLocation.INTERNAL);
+                final IGridNode node = (IGridNode) Main.MGGN.invokeWithArguments(Main.CCE.cast(controller), AEPartLocation.INTERNAL);
                 if (node == null) {
                     this.controllerState = ControllerState.CONTROLLER_CONFLICT;
                     return;
@@ -81,7 +81,7 @@ public class PathGridCacheMixin {
             else {
                 for (Object controller : this.controllers)
                     if (this.controllers.contains(controller))
-                        Main.fieldIsValid.set(controller, false);
+                        Main.FIV.set(controller, false);
                 return;
             }
         }

@@ -7,16 +7,16 @@ public class ClientInit implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(Main.SCI, (m, h, p, ps) -> {
-            Config config = Main.lc;
+            Config c = Main.LC;
 
-            config.ControllerLimits = p.readBoolean();
-            config.DisableChannels = p.readBoolean();
-            config.SCFD = p.readBoolean();
-            config.ChatInfo = p.readBoolean();
+            c.CL = p.readBoolean();
+            c.DC = p.readBoolean();
+            c.SCFD = p.readBoolean();
+            c.CI = p.readBoolean();
 
-            config.Max_X = p.readInt();
-            config.Max_Y = p.readInt();
-            config.Max_Z = p.readInt();
+            c.MX = p.readInt();
+            c.MY = p.readInt();
+            c.MZ = p.readInt();
         });
     }
 }

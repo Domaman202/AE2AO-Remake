@@ -12,6 +12,6 @@ public class AbstractStorageCellMixin extends AEBaseItem {
 
     @Override
     public boolean damage(DamageSource s) {
-        return !Main.lc.SCFD && super.damage(s);
+        return !Main.LC.SCFD && super.damage(s);
     }
 }

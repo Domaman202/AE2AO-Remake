@@ -19,16 +19,16 @@ public class PlayerManagerMixin {
     public void onPlayerConnectInject(ClientConnection cc, ServerPlayerEntity p, CallbackInfo ci) {
         PacketByteBuf b = PacketByteBufs.create();
         //
-        Config c = Main.lcc;
+        Config c = Main.DC;
 
-        b.writeBoolean(c.ControllerLimits);
-        b.writeBoolean(c.DisableChannels);
+        b.writeBoolean(c.CL);
+        b.writeBoolean(c.DC);
         b.writeBoolean(c.SCFD);
-        b.writeBoolean(c.ChatInfo);
+        b.writeBoolean(c.CI);
 
-        b.writeInt(c.Max_X);
-        b.writeInt(c.Max_Y);
-        b.writeInt(c.Max_Z);
+        b.writeInt(c.MX);
+        b.writeInt(c.MY);
+        b.writeInt(c.MZ);
         //
         ServerPlayNetworking.send(p, Main.SCI, b);
     }

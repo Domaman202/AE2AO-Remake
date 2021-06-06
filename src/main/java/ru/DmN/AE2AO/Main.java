@@ -18,16 +18,21 @@ import java.nio.charset.StandardCharsets;
 
 public class Main implements ModInitializer {
     //
-    // ClassControllerEntity
-    public static Class<?> cce = null;
-    public static MethodHandle methodGetPos = null;
-    public static MethodHandle methodGetGridNode = null;
-    public static Field fieldIsValid = null;
+    /** Class Controller Entity */
+    public static Class<?> CCE;
+    /** Method GetPos */
+    public static MethodHandle MGP;
+    /** Method GetGridNode */
+    public static MethodHandle MGGN;
+    /** Field IsValid */
+    public static Field FIV;
     // Config
-    public static Config lcc = null;
-    public static Config lc = null;
+    /** Default Config */
+    public static Config DC;
+    /** Last Config */
+    public static Config LC;
     // Packet ID
-    // send config id
+    /** Send Config Id */
     public static final Identifier SCI = new Identifier("ae2ao", "send_config");
     // Init
     @Override
@@ -35,18 +40,18 @@ public class Main implements ModInitializer {
         try {
             //
             try {
-                cce = Class.forName("appeng.tile.networking.ControllerBlockEntity");
+                CCE = Class.forName("appeng.tile.networking.ControllerBlockEntity");
             } catch (ClassNotFoundException e) {
-                cce = Class.forName("appeng.tile.networking.ControllerTileEntity");
+                CCE = Class.forName("appeng.tile.networking.ControllerTileEntity");
             }
 
             MethodHandles.Lookup lookup = MethodHandles.lookup();
 
-            methodGetPos = lookup.findVirtual(cce, "getPos", MethodType.methodType(BlockPos.class));
-            methodGetGridNode = lookup.findVirtual(cce, "getGridNode", MethodType.methodType(IGridNode.class, AEPartLocation.class));
+            MGP = lookup.findVirtual(CCE, "getPos", MethodType.methodType(BlockPos.class));
+            MGGN = lookup.findVirtual(CCE, "getGridNode", MethodType.methodType(IGridNode.class, AEPartLocation.class));
 
-            fieldIsValid = cce.getDeclaredField("isValid");
-            fieldIsValid.setAccessible(true);
+            FIV = CCE.getDeclaredField("isValid");
+            FIV.setAccessible(true);
 
             // Config init
             File conf = new File(FabricLoader.getInstance().getConfigDir() + File.separator + "ae2ao.toml");
@@ -56,11 +61,11 @@ public class Main implements ModInitializer {
                     stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false\nChatInfo = true".getBytes(StandardCharsets.UTF_8));
                 }
 
-                lcc = new Config();
-                lc = new Config();
+                DC = new Config();
+                LC = new Config();
             } else {
-                lcc = new Toml().read(conf).to(Config.class);
-                lc = lcc.clone();
+                DC = new Toml().read(conf).to(Config.class);
+                LC = DC.clone();
             }
         } catch (Exception e) {
             e.printStackTrace();
