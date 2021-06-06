@@ -3,16 +3,10 @@ package ru.DmN.AE2AO;
 import appeng.api.networking.IGridNode;
 import appeng.api.util.AEPartLocation;
 import com.moandjiezana.toml.Toml;
-import com.mojang.brigadier.Command;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.server.command.CommandManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,7 +15,6 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class Main implements ModInitializer {
     //
