@@ -8,6 +8,7 @@ public class ClientInit implements ClientModInitializer {
     public void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(Main.SCI, (m, h, p, ps) -> {
             Config c = Main.LC;
+            Main.PC = c.clone();
 
             c.CL = p.readBoolean();
             c.DC = p.readBoolean();

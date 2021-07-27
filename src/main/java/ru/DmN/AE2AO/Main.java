@@ -31,6 +31,8 @@ public class Main implements ModInitializer {
     public static Config DC;
     /** Last Config */
     public static Config LC;
+    /** Prev Config */
+    public static Config PC = null;
     // Packet ID
     /** Send Config Id */
     public static final Identifier SCI = new Identifier("ae2ao", "send_config");

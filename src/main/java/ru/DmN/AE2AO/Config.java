@@ -12,7 +12,12 @@ public class Config implements Cloneable {
     //
     public boolean CI = true;
     //
-    public Config clone() throws CloneNotSupportedException {
-        return (Config) super.clone();
+    public Config clone() {
+        try {
+            return (Config) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

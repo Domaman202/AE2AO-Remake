@@ -15,7 +15,7 @@ import ru.DmN.AE2AO.Main;
 public class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onGameJoin", at = @At("RETURN"))
     public void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
-        if (Main.LC.CI) {
+        if (Main.LC.CI && Main.LC != Main.PC) {
             Config config = Main.LC;
             MinecraftClient.getInstance().player.sendMessage(new LiteralText(
                     "AE2AO config loaded!\nControllerLimits = " + config.CL +
