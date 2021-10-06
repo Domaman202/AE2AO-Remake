@@ -1,4 +1,4 @@
-package ru.DmN.__internal_AE2AO;
+package ru.DmN._i.AE2AO;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

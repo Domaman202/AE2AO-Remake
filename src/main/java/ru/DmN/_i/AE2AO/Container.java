@@ -1,4 +1,4 @@
-package ru.DmN.__internal_AE2AO;
+package ru.DmN._i.AE2AO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 abstract class Container {
-
   abstract boolean accepts(String key);
   abstract void put(String key, Object value);
   abstract Object get(String key);
