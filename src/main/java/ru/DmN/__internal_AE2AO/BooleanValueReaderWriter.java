@@ -1,10 +1,9 @@
-package com.moandjiezana.toml;
+package ru.DmN.__internal_AE2AO;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 class BooleanValueReaderWriter implements ValueReader {
-  
   static final BooleanValueReaderWriter BOOLEAN_VALUE_READER_WRITER = new BooleanValueReaderWriter(); 
 
   @Override
@@ -17,15 +16,8 @@ class BooleanValueReaderWriter implements ValueReader {
     s = s.substring(index.get());
     Boolean b = s.startsWith("true") ? Boolean.TRUE : Boolean.FALSE;
     
-    int endIndex = b == Boolean.TRUE ? 4 : 5;
-    
-    index.addAndGet(endIndex - 1);
+    index.addAndGet(b == Boolean.TRUE ? 3 : 4);
     
     return b;
-  }
-
-  @Override
-  public String toString() {
-    return "boolean";
   }
 }

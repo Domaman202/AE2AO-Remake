@@ -1,4 +1,4 @@
-package com.moandjiezana.toml;
+package ru.DmN.__internal_AE2AO;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

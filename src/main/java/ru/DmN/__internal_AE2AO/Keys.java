@@ -1,4 +1,4 @@
-package com.moandjiezana.toml;
+package ru.DmN.__internal_AE2AO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,6 @@ class Keys {
       }
       if (isQuote(c) && (i == 0 || key.charAt(i - 1) != '\\')) {
         quoted = !quoted;
-        indexable = false;
       }
       if (c != '.' || quoted) {
         current.insert(0, c);

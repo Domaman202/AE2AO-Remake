@@ -1,4 +1,4 @@
-package com.moandjiezana.toml;
+package ru.DmN.__internal_AE2AO;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -147,7 +147,6 @@ class Identifier {
           quoteAllowed = false;
         } else if (!quoted) {
           quoted = true;
-          quoteAllowed = true;
         }
       } else if (c == '.') {
         if (dotAllowed) {
@@ -175,12 +174,10 @@ class Identifier {
       }
     }
 
-    if (!valid) {
-      context.errors.invalidTable(name, context.line.get());
-      return false;
-    }
-
-    return true;
+    if (valid)
+      return true;
+    context.errors.invalidTable(name, context.line.get());
+    return false;
   }
 
   private static boolean isValidTableArray(String line, Context context) {
@@ -217,7 +214,6 @@ class Identifier {
           quoteAllowed = false;
         } else if (!quoted) {
           quoted = true;
-          quoteAllowed = true;
         }
       } else if (c == '.') {
         if (dotAllowed) {
@@ -256,9 +252,8 @@ class Identifier {
   static String replaceUnicodeCharacters(String value) {
     Matcher unicodeMatcher = Pattern.compile("\\\\[uU](.{4})").matcher(value);
 
-    while (unicodeMatcher.find()) {
+    while (unicodeMatcher.find())
       value = value.replace(unicodeMatcher.group(), new String(Character.toChars(Integer.parseInt(unicodeMatcher.group(1), 16))));
-    }
     return value;
   }
 }

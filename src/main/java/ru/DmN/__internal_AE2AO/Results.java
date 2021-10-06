@@ -1,4 +1,4 @@
-package com.moandjiezana.toml;
+package ru.DmN.__internal_AE2AO;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -105,12 +105,6 @@ class Results {
         .append(value.trim());
     }
 
-    public void heterogenous(String key, int line) {
-      sb.append(key)
-        .append(" becomes a heterogeneous array on line ")
-        .append(line);
-    }
-    
     boolean hasErrors() {
       return sb.length() > 0;
     }

@@ -1,6 +1,6 @@
-package com.moandjiezana.toml;
+package ru.DmN.__internal_AE2AO;
 
-import static com.moandjiezana.toml.IdentifierConverter.IDENTIFIER_CONVERTER;
+import static ru.DmN.__internal_AE2AO.IdentifierConverter.IDENTIFIER_CONVERTER;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

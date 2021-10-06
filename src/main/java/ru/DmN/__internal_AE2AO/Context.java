@@ -1,4 +1,4 @@
-package com.moandjiezana.toml;
+package ru.DmN.__internal_AE2AO;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -11,9 +11,5 @@ class Context {
     this.identifier = identifier;
     this.line = line;
     this.errors = errors;
-  }
-
-  public Context with(Identifier identifier) {
-    return new Context(identifier, line, errors);
   }
 }

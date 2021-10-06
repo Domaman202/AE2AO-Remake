@@ -1,4 +1,4 @@
-package com.moandjiezana.toml;
+package ru.DmN.__internal_AE2AO;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -38,10 +38,8 @@ class NumberValueReaderWriter implements ValueReader {
         exponentable = !type.equals("exponent");
       } else if ((c == '+' || c == '-') && signable && notLastChar) {
         signable = false;
-        terminatable = false;
-        if (c == '-') {
+        if (c == '-')
           sb.append('-');
-        }
       } else if (c == '.' && dottable && notLastChar) {
         sb.append('.');
         type = "float";
@@ -60,28 +58,18 @@ class NumberValueReaderWriter implements ValueReader {
       } else if (c == '_' && underscorable && notLastChar && Character.isDigit(s.charAt(i + 1))) {
         underscorable = false;
       } else {
-        if (!terminatable) {
+        if (!terminatable)
           type = "";
-        }
         index.decrementAndGet();
         break;
       }
     }
 
-    switch (type) {
-      case "integer":
-        return Long.valueOf(sb.toString());
-      case "float":
-        return Double.valueOf(sb.toString());
-      case "exponent":
-        String[] exponentString = sb.toString().split("E");
-
-        return Double.parseDouble(exponentString[0]) * Math.pow(10, Double.parseDouble(exponentString[1]));
-      default:
-        Results.Errors errors = new Results.Errors();
-        errors.invalidValue(context.identifier.getName(), sb.toString(), context.line.get());
-        return errors;
-    }
+    if ("integer".equals(type))
+      return Long.valueOf(sb.toString());
+    Results.Errors errors = new Results.Errors();
+    errors.invalidValue(context.identifier.getName(), sb.toString(), context.line.get());
+    return errors;
   }
 
   @Override

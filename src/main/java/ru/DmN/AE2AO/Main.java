@@ -2,7 +2,7 @@ package ru.DmN.AE2AO;
 
 import appeng.api.networking.IGridNode;
 import appeng.api.util.AEPartLocation;
-import com.moandjiezana.toml.Toml;
+import ru.DmN.__internal_AE2AO.Toml;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
