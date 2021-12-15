@@ -28,11 +28,11 @@ public class Main implements ModInitializer {
     public static Field FIV;
     // Config
     /** Default Config */
-    public static Config DC;
+    public static Config DC = new Config();
     /** Last Config */
-    public static Config LC;
+    public static Config LC = DC.clone();
     /** Prev Config */
-    public static Config PC = null;
+    public static Config PC = LC.clone();
     // Packet ID
     /** Send Config Id */
     public static final Identifier SCI = new Identifier("ae2ao", "send_config");
@@ -62,9 +62,6 @@ public class Main implements ModInitializer {
                 try (FileOutputStream stream = new FileOutputStream(conf)) {
                     stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false\nChatInfo = true".getBytes(StandardCharsets.UTF_8));
                 }
-
-                DC = new Config();
-                LC = new Config();
             } else {
                 DC = new Toml().read(conf).to(Config.class);
                 LC = DC.clone();
