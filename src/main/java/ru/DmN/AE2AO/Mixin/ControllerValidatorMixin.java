@@ -46,7 +46,7 @@ public class ControllerValidatorMixin {
             minZ = Math.min(pos.getZ(), minZ);
             maxZ = Math.max(pos.getZ(), maxZ);
 
-            if (maxX - minX < Main.LC.MX && maxY - minY < Main.LC.MY && maxZ - minZ < Main.LC.MZ) {
+            if (maxX - minX < Main.LC.Max_X && maxY - minY < Main.LC.Max_Y && maxZ - minZ < Main.LC.Max_Z) {
                 this.found++;
                 return true;
             }
