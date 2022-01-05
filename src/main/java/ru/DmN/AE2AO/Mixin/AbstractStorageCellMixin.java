@@ -1,12 +1,12 @@
 package ru.DmN.AE2AO.Mixin;
 
 import appeng.items.AEBaseItem;
-import appeng.items.storage.AbstractStorageCell;
+import appeng.items.storage.BasicStorageCell;
 import net.minecraft.entity.damage.DamageSource;
 import org.spongepowered.asm.mixin.Mixin;
 import ru.DmN.AE2AO.Main;
 
-@Mixin(AbstractStorageCell.class)
+@Mixin(BasicStorageCell.class)
 public class AbstractStorageCellMixin extends AEBaseItem {
     private AbstractStorageCellMixin(Settings p) { super(p); }
 
