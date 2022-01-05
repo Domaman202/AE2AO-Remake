@@ -21,14 +21,14 @@ public class PlayerManagerMixin {
         //
         Config c = Main.DC;
 
-        b.writeBoolean(c.CL);
-        b.writeBoolean(c.DC);
+        b.writeBoolean(c.ControllerLimits);
+        b.writeBoolean(c.DisableChannels);
         b.writeBoolean(c.SCFD);
-        b.writeBoolean(c.CI);
+        b.writeBoolean(c.ChatInfo);
 
-        b.writeInt(c.MX);
-        b.writeInt(c.MY);
-        b.writeInt(c.MZ);
+        b.writeInt(c.Max_X);
+        b.writeInt(c.Max_Y);
+        b.writeInt(c.Max_Z);
         //
         ServerPlayNetworking.send(p, Main.SCI, b);
     }

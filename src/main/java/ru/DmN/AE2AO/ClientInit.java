@@ -10,14 +10,14 @@ public class ClientInit implements ClientModInitializer {
             Config c = Main.LC;
             Main.PC = c.clone();
 
-            c.CL = p.readBoolean();
-            c.DC = p.readBoolean();
+            c.ControllerLimits = p.readBoolean();
+            c.DisableChannels = p.readBoolean();
             c.SCFD = p.readBoolean();
-            c.CI = p.readBoolean();
+            c.ChatInfo = p.readBoolean();
 
-            c.MX = p.readInt();
-            c.MY = p.readInt();
-            c.MZ = p.readInt();
+            c.Max_X = p.readInt();
+            c.Max_Y = p.readInt();
+            c.Max_Z = p.readInt();
         });
     }
 }

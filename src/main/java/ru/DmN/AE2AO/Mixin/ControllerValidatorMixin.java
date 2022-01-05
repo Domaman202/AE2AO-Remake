@@ -1,7 +1,8 @@
 package ru.DmN.AE2AO.Mixin;
 
-import appeng.api.networking.IGridHost;
 import appeng.api.networking.IGridNode;
+import appeng.api.networking.pathing.ControllerState;
+import appeng.blockentity.networking.ControllerBlockEntity;
 import appeng.me.pathfinding.ControllerValidator;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,10 +10,12 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
+import java.util.Collection;
+
 @Mixin(value = ControllerValidator.class, remap = false)
 public class ControllerValidatorMixin {
     @Shadow
-    private boolean isValid;
+    private boolean valid;
     @Shadow
     private int found;
     @Shadow
@@ -28,16 +31,20 @@ public class ControllerValidatorMixin {
     @Shadow
     private int maxZ;
 
+    @Shadow
+    private static boolean hasControllerCross(Collection<ControllerBlockEntity> controllers) {
+        return false;
+    }
+
     /**
      * @author DomamaN202
      * @reason Adding a size customization
      */
     @Overwrite
-    public boolean visitNode(IGridNode n) throws Throwable {
-        IGridHost h = n.getMachine();
-
-        if (isValid && Main.CCE.isInstance(h)) {
-            BlockPos pos = (BlockPos) Main.MGP.invokeWithArguments(Main.CCE.cast(h));
+    public boolean visitNode(IGridNode n) {
+        Object h = n.getOwner();
+        if (valid && h instanceof ControllerBlockEntity) {
+            BlockPos pos = ((ControllerBlockEntity) h).getPos();
 
             minX = Math.min(pos.getX(), minX);
             maxX = Math.max(pos.getX(), maxX);
@@ -46,14 +53,46 @@ public class ControllerValidatorMixin {
             minZ = Math.min(pos.getZ(), minZ);
             maxZ = Math.max(pos.getZ(), maxZ);
 
-            if (maxX - minX < Main.LC.MX && maxY - minY < Main.LC.MY && maxZ - minZ < Main.LC.MZ) {
+            if (maxX - minX < Main.LC.Max_X && maxY - minY < Main.LC.Max_Y && maxZ - minZ < Main.LC.Max_Z) {
                 this.found++;
                 return true;
             }
 
-            isValid = false;
+            valid = false;
         }
 
         return false;
+    }
+
+    /**
+     * @author DomamaN202
+     */
+    @Overwrite
+    public static ControllerState calculateState(Collection<ControllerBlockEntity> controllers) throws Throwable {
+        if (controllers.isEmpty()) {
+            return ControllerState.NO_CONTROLLER;
+        }
+
+        var startingController = controllers.iterator().next();
+        var startingNode = startingController.getGridNode();
+        if (startingNode == null) {
+            return ControllerState.CONTROLLER_CONFLICT;
+        }
+
+        var constructor = ControllerValidator.class.getDeclaredConstructor(BlockPos.class);
+        constructor.setAccessible(true);
+        var cv = constructor.newInstance(startingController.getPos());
+        startingNode.beginVisit(cv);
+
+        if (!cv.isValid())
+            return ControllerState.CONTROLLER_CONFLICT;
+
+        if (cv.getFound() != controllers.size() && Main.LC.ControllerLimits)
+            return ControllerState.CONTROLLER_CONFLICT;
+
+        if (hasControllerCross(controllers))
+            return ControllerState.CONTROLLER_CONFLICT;
+
+        return ControllerState.CONTROLLER_ONLINE;
     }
 }
