@@ -2,15 +2,19 @@ package ru.DmN.AE2AO;
 
 import appeng.api.networking.IGridNode;
 import appeng.api.util.AEPartLocation;
+import ru.DmN._i.AE2AO.Toml;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import ru.DmN.config.Utils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 
 public class Main implements ModInitializer {
     //
@@ -52,8 +56,14 @@ public class Main implements ModInitializer {
             FIV.setAccessible(true);
 
             // Config init
-            if (!Utils.checkCreateConfig("ae2ao.toml", "DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false\nChatInfo = true")) {
-                DC = Utils.loadConfig("ae2ao.toml", Config.class);
+            File conf = new File(FabricLoader.getInstance().getConfigDir() + File.separator + "ae2ao.toml");
+
+            if (conf.createNewFile()) {
+                try (FileOutputStream stream = new FileOutputStream(conf)) {
+                    stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false\nChatInfo = true".getBytes(StandardCharsets.UTF_8));
+                }
+            } else {
+                DC = new Toml().read(conf).to(Config.class);
                 LC = DC.clone();
             }
         } catch (Exception e) {

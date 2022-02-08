@@ -3,8 +3,8 @@ plugins {
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_10
-targetCompatibility = JavaVersion.VERSION_1_10
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -42,10 +42,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "alexiil.mc.lib:libblockattributes-all:0.8.9-pre.2"
-	modImplementation "appeng:appliedenergistics2-fabric:8.1.0-alpha.13"
 
-	modImplementation ":DmNConfig-1.0.0"
-	include ":DmNConfig-1.0.0"
+	modImplementation "appeng:appliedenergistics2-fabric:8.1.0-alpha.13"
 }
 
 processResources {
