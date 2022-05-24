@@ -29,7 +29,7 @@ public class Main implements ModInitializer {
 
             if (conf.createNewFile()) {
                 try (FileOutputStream stream = new FileOutputStream(conf)) {
-                    stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false\nChatInfo = true".getBytes(StandardCharsets.UTF_8));
+                    stream.write("DisableChannels = false\nControllerLimits = false\nMax_X = 7\nMax_Y = 7\nMax_Z = 7\nSCFD = false\nStorageCellLimits = true\nChatInfo = true".getBytes(StandardCharsets.UTF_8));
                 }
             } else {
                 DC = new Toml().read(conf).to(Config.class);

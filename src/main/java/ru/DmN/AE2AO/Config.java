@@ -9,6 +9,7 @@ public class Config implements Cloneable {
     public int Max_Z = 7;
     // Storage Cell Fire Damage
     public boolean SCFD = false;
+    public boolean StorageCellLimits = true;
     //
     public boolean ChatInfo = true;
     //
