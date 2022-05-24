@@ -26,15 +26,6 @@ public class AbstractStorageCellMixin extends AEBaseItem {
      * @reason Config
      */
     @Overwrite
-    public int getTotalTypes(final ItemStack cellItem) {
-        return Main.LC.StorageCellLimits ? 63 : Integer.MAX_VALUE;
-    }
-
-    /**
-     * @author DomamaN202
-     * @reason Config
-     */
-    @Overwrite
     public int getBytes(ItemStack cellItem) {
         return Main.LC.StorageCellLimits ? this.totalBytes : Integer.MAX_VALUE;
     }

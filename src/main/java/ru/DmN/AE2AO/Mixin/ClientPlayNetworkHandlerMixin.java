@@ -21,6 +21,7 @@ public class ClientPlayNetworkHandlerMixin {
                     "AE2AO config loaded!\nControllerLimits = " + config.ControllerLimits +
                             "\nDisableChannels = " + config.DisableChannels +
                             "\nSCFD = " + config.SCFD +
+                            "\nStorageCellLimits = " + config.StorageCellLimits +
                             "\nMax_X = " + config.Max_X +
                             "\nMax_Y = " + config.Max_Y +
                             "\nMax_Z = " + config.Max_Z
