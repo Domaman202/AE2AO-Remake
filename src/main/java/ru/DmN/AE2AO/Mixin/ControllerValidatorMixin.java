@@ -10,10 +10,16 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.DmN.AE2AO.Main;
 
+import java.lang.reflect.Constructor;
 import java.util.Collection;
 
 @Mixin(value = ControllerValidator.class, remap = false)
 public class ControllerValidatorMixin {
+    @Shadow
+    private static boolean hasControllerCross(Collection<ControllerBlockEntity> controllers) {
+        return false;
+    }
+
     @Shadow
     private boolean valid;
     @Shadow
@@ -30,11 +36,6 @@ public class ControllerValidatorMixin {
     private int maxY;
     @Shadow
     private int maxZ;
-
-    @Shadow
-    private static boolean hasControllerCross(Collection<ControllerBlockEntity> controllers) {
-        return false;
-    }
 
     /**
      * @author DomamaN202
@@ -66,33 +67,28 @@ public class ControllerValidatorMixin {
 
     /**
      * @author DomamaN202
+     * @reason Config
      */
     @Overwrite
     public static ControllerState calculateState(Collection<ControllerBlockEntity> controllers) throws Throwable {
         if (controllers.isEmpty()) {
             return ControllerState.NO_CONTROLLER;
         }
-
-        var startingController = controllers.iterator().next();
-        var startingNode = startingController.getGridNode();
+        ControllerBlockEntity startingController = controllers.iterator().next();
+        IGridNode startingNode = startingController.getGridNode();
         if (startingNode == null) {
             return ControllerState.CONTROLLER_CONFLICT;
         }
-
-        var constructor = ControllerValidator.class.getDeclaredConstructor(BlockPos.class);
+        Constructor<?> constructor = ControllerValidator.class.getDeclaredConstructor(BlockPos.class);
         constructor.setAccessible(true);
-        var cv = constructor.newInstance(startingController.getPos());
+        ControllerValidator cv = (ControllerValidator) constructor.newInstance(startingController.getPos());
         startingNode.beginVisit(cv);
-
         if (!cv.isValid())
             return ControllerState.CONTROLLER_CONFLICT;
-
         if (cv.getFound() != controllers.size() && Main.LC.ControllerLimits)
             return ControllerState.CONTROLLER_CONFLICT;
-
         if (hasControllerCross(controllers))
             return ControllerState.CONTROLLER_CONFLICT;
-
         return ControllerState.CONTROLLER_ONLINE;
     }
 }

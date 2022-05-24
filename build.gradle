@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'fabric-loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -12,6 +12,28 @@ group = project.maven_group
 
 repositories {
 	flatDir name: 'flatDirRepo', dirs: './libs'
+
+	maven {
+		url "https://maven.shedaniel.me/"
+		content {
+			includeGroup "me.shedaniel"
+			includeGroup "me.shedaniel.cloth"
+			includeGroup "dev.architectury"
+		}
+	}
+
+	maven {
+		url "https://maven.bai.lol"
+		content {
+			includeGroup "mcp.mobius.waila"
+		}
+	}
+	maven {
+		url "https://maven.parchmentmc.net/"
+		content {
+			includeGroup "org.parchmentmc.data"
+		}
+	}
 
 	maven {
 		name "Modmaven"
@@ -31,7 +53,6 @@ repositories {
 	}
 
 	maven { url 'https://jitpack.io' }
-	maven { url "https://maven.shedaniel.me/" }
 }
 
 dependencies {
@@ -41,10 +62,10 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "alexiil.mc.lib:libblockattributes-all:0.10.0"
-
-//	modImplementation "appeng:appliedenergistics2-fabric:10.0.0-beta.3"
-	modImplementation files("appliedenergistics2-10.0.0-beta.3.jar")
+	modImplementation "alexiil.mc.lib:libblockattributes-all:0.10.2"
+	modImplementation "appeng:appliedenergistics2-fabric:11.0.0-alpha.5"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.2.463"
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.2.463"
 }
 
 processResources {
@@ -81,26 +102,5 @@ java {
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
-	}
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-
-	// Select the repositories you want to publish to
-	// To publish to maven local, no extra repositories are necessary. Just use the task `publishToMavenLocal`.
-	repositories {
-		// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	}
 }

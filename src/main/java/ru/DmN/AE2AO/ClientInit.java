@@ -13,6 +13,7 @@ public class ClientInit implements ClientModInitializer {
             c.ControllerLimits = p.readBoolean();
             c.DisableChannels = p.readBoolean();
             c.SCFD = p.readBoolean();
+            c.StorageCellLimits = p.readBoolean();
             c.ChatInfo = p.readBoolean();
 
             c.Max_X = p.readInt();

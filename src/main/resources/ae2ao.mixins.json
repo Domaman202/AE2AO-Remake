@@ -4,7 +4,8 @@
   "package": "ru.DmN.AE2AO.Mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "AbstractStorageCellMixin",
+    "BasicCellInventoryMixin",
+    "BasicStorageCellItemMixin",
     "ClientPlayNetworkHandlerMixin",
     "ControllerValidatorMixin",
     "GridNodeMixin",
