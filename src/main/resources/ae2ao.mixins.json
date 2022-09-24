@@ -6,11 +6,9 @@
   "mixins": [
     "AbstractCellInventoryMixin",
     "AbstractStorageCellMixin",
-    "ClientPlayNetworkHandlerMixin",
     "ControllerValidatorMixin",
     "GridNodeMixin",
-    "PathGridCacheMixin",
-    "PlayerManagerMixin"
+    "PathGridCacheMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -22,9 +22,6 @@
     "main": [
       "ru.DmN.AE2AO.Main"
     ],
-    "client": [
-      "ru.DmN.AE2AO.ClientInit"
-    ]
   },
   "mixins": [
     "ae2ao.mixins.json"
