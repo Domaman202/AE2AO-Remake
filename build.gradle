@@ -14,28 +14,6 @@ repositories {
 	flatDir name: 'flatDirRepo', dirs: './libs'
 
 	maven {
-		url "https://maven.shedaniel.me/"
-		content {
-			includeGroup "me.shedaniel"
-			includeGroup "me.shedaniel.cloth"
-			includeGroup "dev.architectury"
-		}
-	}
-
-	maven {
-		url "https://maven.bai.lol"
-		content {
-			includeGroup "mcp.mobius.waila"
-		}
-	}
-	maven {
-		url "https://maven.parchmentmc.net/"
-		content {
-			includeGroup "org.parchmentmc.data"
-		}
-	}
-
-	maven {
 		name "Modmaven"
 		url "https://modmaven.dev/"
 		// For Gradle 5.1 and above, limit it to just AE2
@@ -44,6 +22,7 @@ repositories {
 		}
 	}
 
+	// Required for libblockattributes
 	maven {
 		name = "BuildCraft"
 		url = "https://mod-buildcraft.com/maven"
@@ -51,8 +30,6 @@ repositories {
 			includeGroup "alexiil.mc.lib"
 		}
 	}
-
-	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -62,10 +39,9 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "alexiil.mc.lib:libblockattributes-all:0.10.2"
-	modImplementation "appeng:appliedenergistics2-fabric:11.0.0-alpha.5"
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.2.463"
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.2.463"
+	modImplementation files("libs/appliedenergistics2-fabric-12.7.0.jar")
+	modImplementation "teamreborn:energy:2.0.0-beta1"
+	modImplementation("TechReborn:TechReborn-1.19:5.3.4")
 }
 
 processResources {
