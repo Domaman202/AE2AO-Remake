@@ -18,7 +18,7 @@ public class BasicStorageCellItemMixin extends AEBaseItem {
 
     @Shadow
     @Final
-    protected int bytesPerType;
+    protected int totalBytes;
 
     /**
      * @author DomamaN202
@@ -26,7 +26,7 @@ public class BasicStorageCellItemMixin extends AEBaseItem {
      */
     @Overwrite(remap = false)
     public int getBytes(ItemStack cellItem) {
-        return Main.LC.StorageCellLimits ? this.bytesPerType : Integer.MAX_VALUE;
+        return Main.LC.StorageCellLimits ? this.totalBytes : Integer.MAX_VALUE;
     }
 
     @Override
