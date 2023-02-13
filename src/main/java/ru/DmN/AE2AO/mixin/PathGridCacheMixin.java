@@ -1,4 +1,4 @@
-package ru.DmN.AE2AO.Mixin;
+package ru.DmN.AE2AO.mixin;
 
 import appeng.api.networking.IGrid;
 import appeng.api.networking.IGridNode;
@@ -40,7 +40,7 @@ public class PathGridCacheMixin {
 
         if (controllers.isEmpty()) {
             controllerState = ControllerState.NO_CONTROLLER;
-        } else if (Main.LC.ControllerLimits) {
+        } else if (Main.Config.ControllerLimits) {
             IGridNode startingNode = (IGridNode) Main.MGGN.invokeWithArguments(Main.CCE.cast(this.controllers.iterator().next()), AEPartLocation.INTERNAL);
             if (startingNode == null) {
                 this.controllerState = ControllerState.CONTROLLER_CONFLICT;

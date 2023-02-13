@@ -1,4 +1,4 @@
-package ru.DmN.AE2AO.Mixin;
+package ru.DmN.AE2AO.mixin;
 
 import appeng.items.AEBaseItem;
 import appeng.items.storage.AbstractStorageCell;
@@ -18,7 +18,7 @@ public class AbstractStorageCellMixin extends AEBaseItem {
 
     @Override
     public boolean damage(DamageSource s) {
-        return !Main.LC.SCFD && super.damage(s);
+        return !Main.Config.SCFD && super.damage(s);
     }
 
     /**
@@ -27,6 +27,6 @@ public class AbstractStorageCellMixin extends AEBaseItem {
      */
     @Overwrite
     public int getBytes(ItemStack cellItem) {
-        return Main.LC.StorageCellLimits ? this.totalBytes : Integer.MAX_VALUE;
+        return Main.Config.StorageCellLimits ? this.totalBytes : Integer.MAX_VALUE;
     }
 }

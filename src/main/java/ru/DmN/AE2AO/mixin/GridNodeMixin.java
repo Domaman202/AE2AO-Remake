@@ -1,4 +1,4 @@
-package ru.DmN.AE2AO.Mixin;
+package ru.DmN.AE2AO.mixin;
 
 import appeng.me.GridNode;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,6 +15,6 @@ public class GridNodeMixin {
      * @reason Add system turn off channels
      */
     @Overwrite private int getUsedChannels() {
-        return Main.LC.DisableChannels ? 1 : usedChannels;
+        return Main.Config.DisableChannels ? 1 : usedChannels;
     }
 }

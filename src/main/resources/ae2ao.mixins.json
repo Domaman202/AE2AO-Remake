@@ -1,14 +1,15 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "ru.DmN.AE2AO.Mixin",
+  "package": "ru.DmN.AE2AO.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AbstractCellInventoryMixin",
     "AbstractStorageCellMixin",
     "ControllerValidatorMixin",
     "GridNodeMixin",
-    "PathGridCacheMixin"
+    "PathGridCacheMixin",
+    "AEBasePoweredBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

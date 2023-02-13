@@ -1,4 +1,4 @@
-package ru.DmN.AE2AO.Mixin;
+package ru.DmN.AE2AO.mixin;
 
 import appeng.me.storage.AbstractCellInventory;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +16,6 @@ public class AbstractCellInventoryMixin {
      */
     @Overwrite
     public long getTotalItemTypes() {
-        return Main.LC.StorageCellLimits ? this.maxItemTypes : Integer.MAX_VALUE;
+        return Main.Config.StorageCellLimits ? this.maxItemTypes : Integer.MAX_VALUE;
     }
 }

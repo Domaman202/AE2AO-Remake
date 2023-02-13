@@ -21,7 +21,7 @@
   "entrypoints": {
     "main": [
       "ru.DmN.AE2AO.Main"
-    ],
+    ]
   },
   "mixins": [
     "ae2ao.mixins.json"
