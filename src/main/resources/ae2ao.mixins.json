@@ -5,10 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AbstractStorageCellMixin",
-    "ClientPlayNetworkHandlerMixin",
+    "AEBasePoweredBlockEntityMixin",
     "ControllerValidatorMixin",
-    "GridNodeMixin",
-    "PlayerManagerMixin"
+    "GridNodeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

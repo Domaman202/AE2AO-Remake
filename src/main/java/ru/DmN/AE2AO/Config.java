@@ -11,7 +11,7 @@ public class Config implements Cloneable {
     public boolean SCFD = false;
     public boolean StorageCellLimits = true;
     //
-    public boolean ChatInfo = true;
+    public boolean DisableEnergy = false;
     //
     public Config clone() {
         try {

@@ -18,7 +18,7 @@ public class AbstractStorageCellMixin extends AEBaseItem {
 
     @Override
     public boolean damage(DamageSource s) {
-        return !Main.LC.SCFD && super.damage(s);
+        return !Main.Config.SCFD && super.damage(s);
     }
 
     /**
@@ -27,7 +27,7 @@ public class AbstractStorageCellMixin extends AEBaseItem {
      */
     @Overwrite
     public int getTotalTypes(final ItemStack cellItem) {
-        return Main.LC.StorageCellLimits ? 63 : Integer.MAX_VALUE;
+        return Main.Config.StorageCellLimits ? 63 : Integer.MAX_VALUE;
     }
 
     /**
@@ -36,6 +36,6 @@ public class AbstractStorageCellMixin extends AEBaseItem {
      */
     @Overwrite
     public int getBytes(ItemStack cellItem) {
-        return Main.LC.StorageCellLimits ? this.totalBytes : Integer.MAX_VALUE;
+        return Main.Config.StorageCellLimits ? this.totalBytes : Integer.MAX_VALUE;
     }
 }

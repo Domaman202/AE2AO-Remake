@@ -15,6 +15,6 @@ public class GridNodeMixin {
      * @reason Add system turn off channels
      */
     @Overwrite private int getUsedChannels() {
-        return Main.LC.DisableChannels ? 1 : usedChannels;
+        return Main.Config.DisableChannels ? 1 : usedChannels;
     }
 }
