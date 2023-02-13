@@ -1,15 +1,14 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "ru.DmN.AE2AO.Mixin",
+  "package": "ru.DmN.AE2AO.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AEBasePoweredBlockEntityMixin",
     "BasicCellInventoryMixin",
     "BasicStorageCellItemMixin",
-    "ClientPlayNetworkHandlerMixin",
     "ControllerValidatorMixin",
-    "GridNodeMixin",
-    "PlayerManagerMixin"
+    "GridNodeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -21,9 +21,6 @@
   "entrypoints": {
     "main": [
       "ru.DmN.AE2AO.Main"
-    ],
-    "client": [
-      "ru.DmN.AE2AO.ClientInit"
     ]
   },
   "mixins": [

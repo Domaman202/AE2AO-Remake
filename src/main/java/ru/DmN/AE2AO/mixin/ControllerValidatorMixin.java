@@ -1,4 +1,4 @@
-package ru.DmN.AE2AO.Mixin;
+package ru.DmN.AE2AO.mixin;
 
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.pathing.ControllerState;
@@ -54,7 +54,7 @@ public class ControllerValidatorMixin {
             minZ = Math.min(pos.getZ(), minZ);
             maxZ = Math.max(pos.getZ(), maxZ);
 
-            if (maxX - minX < Main.LC.Max_X && maxY - minY < Main.LC.Max_Y && maxZ - minZ < Main.LC.Max_Z) {
+            if (maxX - minX < Main.Config.Max_X && maxY - minY < Main.Config.Max_Y && maxZ - minZ < Main.Config.Max_Z) {
                 this.found++;
                 return true;
             }
@@ -85,7 +85,7 @@ public class ControllerValidatorMixin {
         startingNode.beginVisit(cv);
         if (!cv.isValid())
             return ControllerState.CONTROLLER_CONFLICT;
-        if (cv.getFound() != controllers.size() && Main.LC.ControllerLimits)
+        if (cv.getFound() != controllers.size() && Main.Config.ControllerLimits)
             return ControllerState.CONTROLLER_CONFLICT;
         if (hasControllerCross(controllers))
             return ControllerState.CONTROLLER_CONFLICT;
