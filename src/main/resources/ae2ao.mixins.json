@@ -4,6 +4,7 @@
   "package": "ru.DmN.AE2AO.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AbstractPortableCellMixin",
     "AEBasePoweredBlockEntityMixin",
     "BasicCellInventoryMixin",
     "BasicStorageCellItemMixin",

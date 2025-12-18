@@ -4,38 +4,32 @@ import appeng.api.networking.IGridNode;
 import appeng.api.networking.pathing.ControllerState;
 import appeng.blockentity.networking.ControllerBlockEntity;
 import appeng.me.pathfinding.ControllerValidator;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import ru.DmN.AE2AO.Main;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 
 @Mixin(value = ControllerValidator.class, remap = false)
 public class ControllerValidatorMixin {
-    @Shadow
-    private static boolean hasControllerCross(Collection<ControllerBlockEntity> controllers) {
-        return false;
-    }
+    @Shadow private static boolean hasControllerCross(Collection<ControllerBlockEntity> controllers) {return false;}
+    @Shadow private boolean valid;
+    @Shadow private int found;
+    @Shadow private int minX;
+    @Shadow private int minY;
+    @Shadow private int minZ;
+    @Shadow private int maxX;
+    @Shadow private int maxY;
+    @Shadow private int maxZ;
 
-    @Shadow
-    private boolean valid;
-    @Shadow
-    private int found;
-    @Shadow
-    private int minX;
-    @Shadow
-    private int minY;
-    @Shadow
-    private int minZ;
-    @Shadow
-    private int maxX;
-    @Shadow
-    private int maxY;
-    @Shadow
-    private int maxZ;
+    @Unique private final static MethodHandle CV_CTOR;
 
     /**
      * @author DomamaN202
@@ -45,7 +39,7 @@ public class ControllerValidatorMixin {
     public boolean visitNode(IGridNode n) {
         Object h = n.getOwner();
         if (valid && h instanceof ControllerBlockEntity) {
-            BlockPos pos = ((ControllerBlockEntity) h).getPos();
+            BlockPos pos = ((ControllerBlockEntity) h).getBlockPos();
 
             minX = Math.min(pos.getX(), minX);
             maxX = Math.max(pos.getX(), maxX);
@@ -79,9 +73,7 @@ public class ControllerValidatorMixin {
         if (startingNode == null) {
             return ControllerState.CONTROLLER_CONFLICT;
         }
-        Constructor<?> constructor = ControllerValidator.class.getDeclaredConstructor(BlockPos.class);
-        constructor.setAccessible(true);
-        ControllerValidator cv = (ControllerValidator) constructor.newInstance(startingController.getPos());
+        ControllerValidator cv = (ControllerValidator) CV_CTOR.invoke(startingController.getBlockPos());
         startingNode.beginVisit(cv);
         if (!cv.isValid())
             return ControllerState.CONTROLLER_CONFLICT;
@@ -90,5 +82,15 @@ public class ControllerValidatorMixin {
         if (hasControllerCross(controllers))
             return ControllerState.CONTROLLER_CONFLICT;
         return ControllerState.CONTROLLER_ONLINE;
+    }
+
+    static {
+        try {
+            Constructor<?> ctor = ControllerValidator.class.getDeclaredConstructor(BlockPos.class);
+            ctor.setAccessible(true);
+            CV_CTOR = MethodHandles.publicLookup().unreflectConstructor(ctor);
+        } catch (NoSuchMethodException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

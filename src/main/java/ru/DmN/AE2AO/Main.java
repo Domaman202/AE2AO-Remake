@@ -2,7 +2,6 @@ package ru.DmN.AE2AO;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.util.Identifier;
 import ru.DmN._i.AE2AO.Toml;
 
 import java.io.File;

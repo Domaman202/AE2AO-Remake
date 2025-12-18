@@ -1,47 +1,83 @@
 plugins {
-	id 'fabric-loom' version '1.4-SNAPSHOT'
+	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-repositories {
-	flatDir name: 'flatDirRepo', dirs: './libs'
+base {
+	archivesName = project.archives_base_name
+}
 
+repositories {
+	maven {
+		url = "https://cursemaven.com"
+		content {
+			includeGroup "curse.maven"
+		}
+	}
+	maven {
+		url = "https://maven.blamejared.com/"
+	}
+	maven {
+		url = "https://dvs1.progwml6.com/files/maven/"
+	}
 	maven {
 		name "Modmaven"
 		url "https://modmaven.dev/"
-		// For Gradle 5.1 and above, limit it to just AE2
 		content {
 			includeGroup 'appeng'
 		}
 	}
-
-	// Required for libblockattributes
 	maven {
-		name = "BuildCraft"
-		url = "https://mod-buildcraft.com/maven"
+		url "https://maven.shedaniel.me/"
 		content {
-			includeGroup "alexiil.mc.lib"
+			includeGroup "me.shedaniel"
+			includeGroup "me.shedaniel.cloth"
+			includeGroup "dev.architectury"
+		}
+	}
+	maven {
+		url "https://maven.parchmentmc.net/"
+		content {
+			includeGroup "org.parchmentmc.data"
+		}
+	}
+	maven { url = "https://maven.quiltmc.org/repository/release" }
+	maven { url = "https://maven.fabricmc.net/" }
+	maven { url = "https://maven.minecraftforge.net/" }
+	maven { url = "https://maven.firstdarkdev.xyz/snapshots" }
+	maven { url = "https://maven.terraformersmc.com/releases/" }
+    mavenCentral()
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+	mods {
+		"modid" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
 		}
 	}
 }
 
 dependencies {
+	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.19.3:2023.02.05@zip")
+	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation files("libs/appliedenergistics2-fabric-15.0.16.jar")
-	modImplementation "teamreborn:energy:3.0.0"
-	modImplementation("TechReborn:TechReborn-1.20:5.10.2")
+	modImplementation "appeng:appliedenergistics2-fabric:15.0.15"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+//	modImplementation "teamreborn:energy:3.0.0"
+//	modImplementation("TechReborn:TechReborn-1.20:5.10.2")
 }
 
 processResources {
@@ -53,19 +89,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// ensure that the encoding is set to UTF-8, no matter what the system default is
-	// this fixes some edge cases with special characters not displaying correctly
-	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-	// If Javadoc is generated, this must be specified in that task too.
-	it.options.encoding = "UTF-8"
-
-	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-	// JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
-	// We'll use that if it's available, but otherwise we'll use the older option.
-	def targetVersion = 10
-	if (JavaVersion.current().isJava9Compatible()) {
-		 it.options.release = targetVersion
-	}
+	it.options.release = 21
 }
 
 java {
@@ -73,10 +97,32 @@ java {
 	// if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
+
 }
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_${project.base.archivesName.get()}"}
 	}
+}
+
+// configure the maven publication
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			artifactId = project.archives_base_name
+			from components.java
+		}
+	}
+
+	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+	repositories {
+		// Add repositories to publish to here.
+		// Notice: This block does NOT have the same function as the block in the top level.
+		// The repositories here will be used for publishing your artifact, not for
+		// retrieving dependencies.
+	}
+}
+kotlin {
+    jvmToolchain(21)
 }
